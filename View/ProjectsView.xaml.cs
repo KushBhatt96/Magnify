@@ -24,5 +24,6 @@ namespace Magnify.View
         {
             InitializeComponent();
         }
+
     }
 }
