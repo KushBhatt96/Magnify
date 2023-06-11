@@ -15,6 +15,8 @@
     <None Remove="Images\bug_icon.png" />
     <None Remove="Images\butterfly_large.png" />
     <None Remove="Images\close.png" />
+    <None Remove="Images\delete_small.png" />
+    <None Remove="Images\edit_small.png" />
     <None Remove="Images\excel.png" />
     <None Remove="Images\forward.png" />
     <None Remove="Images\maximize.png" />
@@ -46,6 +48,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\close.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\delete_small.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\edit_small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\excel.png">

@@ -1,4 +1,6 @@
 ﻿using Magnify.Data;
+using Magnify.Interfaces;
+using Magnify.Services;
 using Magnify.ViewModel;
 using System.Windows;
 
@@ -13,9 +15,9 @@ namespace Magnify
         public MainWindow()
         {
             InitializeComponent();
-
-            _viewModel = new MainViewModel(new DashboardViewModel(),
-                new ProjectsViewModel(new ProjectDataProvider()), new WorkItemsViewModel());
+            var messenger = Messenger.Instance;
+            _viewModel = new MainViewModel(new DashboardViewModel(messenger),
+                new ProjectsViewModel(new ProjectDataProvider(), messenger), new WorkItemsViewModel());
 
             DataContext = _viewModel;
 

@@ -7,10 +7,130 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#f7f6f4">
-        <TextBlock HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="64">
-            Dashboard
-        </TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        Margin="30 30 0 0">
+                <TextBlock Margin="0 0 0 5">
+                    Select Project
+                </TextBlock>
+                <ComboBox Width="200"
+                          Height="32"
+                          VerticalContentAlignment="Center">
+                    <ComboBox.Effect>
+                        <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
+                    </ComboBox.Effect>
+                    <ComboBoxItem Content="ESummit"/>
+                    <ComboBoxItem Content="Kali Teeri"/>
+                    <ComboBoxItem Content="Home Fresh"/>
+                </ComboBox>
+            </StackPanel>
+            <TextBlock Grid.Column="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="32"
+                       FontWeight="DemiBold"
+                       Margin="0 0 230 0">
+                ESummit Web Server
+            </TextBlock>
+        </Grid>
+        <Grid Grid.Row="1"
+              Margin="0 0 0 30">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0"
+                  Grid.Column="0"
+                  Margin="30 10 10 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="64">
+                    ?
+                </TextBlock>
+                <TextBlock Grid.Row="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="16">
+                    Active work items by priority
+                </TextBlock>
+            </Grid>
+            <Grid Grid.Row="0"
+                  Grid.Column="1"
+                  Margin="10 10 30 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="64">
+                    ?
+                </TextBlock>
+                <TextBlock Grid.Row="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="16">
+                    Active work items by type
+                </TextBlock>
+            </Grid>
+            <Grid Grid.Row="1"
+                  Grid.Column="0"
+                  Margin="30 10 10 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="64">
+                    ?
+                </TextBlock>
+                <TextBlock Grid.Row="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="16">
+                    All work items by status
+                </TextBlock>
+            </Grid>
+            <Grid Grid.Row="1"
+                  Grid.Column="1"
+                  Margin="10 10 30 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="64"
+                           Text="{Binding ProjectsCount}"/>
+                <TextBlock Grid.Row="1"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="16">
+                    Total projects (temporary)
+                </TextBlock>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

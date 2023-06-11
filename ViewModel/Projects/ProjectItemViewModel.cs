@@ -45,7 +45,7 @@ namespace Magnify.ViewModel
         }
 
         // Make CreatedAt a readonly property by not having a setter. We can use expression-bodied syntax here.
-        public DateTime CreatedAt => _project.CreatedAt;
+        public string CreatedAt => _project.CreatedAt != null ? _project.CreatedAt : "";
 
         public ProjectType ProjectType
         {
