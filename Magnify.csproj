@@ -12,6 +12,7 @@
     <None Remove="Images\add_large.png" />
     <None Remove="Images\add_small.png" />
     <None Remove="Images\back.png" />
+    <None Remove="Images\back_arrow_small.png" />
     <None Remove="Images\bug_icon.png" />
     <None Remove="Images\butterfly_large.png" />
     <None Remove="Images\close.png" />
@@ -19,6 +20,7 @@
     <None Remove="Images\edit_small.png" />
     <None Remove="Images\excel.png" />
     <None Remove="Images\forward.png" />
+    <None Remove="Images\forward_arrow_small.png" />
     <None Remove="Images\maximize.png" />
     <None Remove="Images\minimize.png" />
   </ItemGroup>
@@ -41,6 +43,9 @@
     <Resource Include="Images\back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\back_arrow_small.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\bug_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -60,6 +65,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\forward.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\forward_arrow_small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\maximize.png">

@@ -133,6 +133,8 @@
                                     <Button Width="24"
                                         Height="24"
                                         Background="#fafafa"
+                                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
+                                              Path=DataContext.NavigateToProjectDetailsCommand}"
                                         BorderBrush="Transparent">
                                         <Image Source="/Images/edit_small.png"/>
                                     </Button>

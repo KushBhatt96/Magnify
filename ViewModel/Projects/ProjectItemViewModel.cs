@@ -1,9 +1,5 @@
-﻿using Magnify.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Magnify.Command;
+using Magnify.Model;
 
 namespace Magnify.ViewModel
 {

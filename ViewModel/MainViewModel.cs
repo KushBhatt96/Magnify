@@ -1,15 +1,11 @@
-﻿using Magnify.Command;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Magnify.Model.Stores;
 
 namespace Magnify.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
 
+        private readonly NavigationStore _navigationStore;
 
         private BaseViewModel? _selectedViewModel;
 
@@ -23,45 +19,25 @@ namespace Magnify.ViewModel
             }
         }
 
+        public LoginViewModel LoginViewModel { get; }
+        public HomeViewModel HomeViewModel { get; }
 
-        public DelegateCommand SelectViewModelCommand { get; }
-
-        public DashboardViewModel DashboardViewModel { get; }
-        public ProjectsViewModel ProjectsViewModel { get; }
-
-        public WorkItemsViewModel WorkItemsViewModel { get; }
-
-        public MainViewModel(DashboardViewModel dashboardViewModel, ProjectsViewModel projectsViewModel, WorkItemsViewModel workItemsViewModel)
+        public MainViewModel(LoginViewModel loginViewModel, HomeViewModel homeViewModel, NavigationStore navigationStore)
         {
-            DashboardViewModel = dashboardViewModel;
-            ProjectsViewModel = projectsViewModel;
-            WorkItemsViewModel = workItemsViewModel;
-            SelectedViewModel = DashboardViewModel;
+            LoginViewModel = loginViewModel;
+            HomeViewModel = homeViewModel;
 
-            SelectViewModelCommand = new DelegateCommand(SelectViewModel);
+            SelectedViewModel = loginViewModel;
+
+            _navigationStore = navigationStore;
+            _navigationStore.NavigationChanged += User_NavigateAfterLogin;
         }
 
-        public async void SelectViewModel(object? parameter)
-        {
-            try
-            {
-                SelectedViewModel = parameter as BaseViewModel;
-                await LoadAsync();
-            }
-            catch(Exception ex)
-            {
-                // Add logging here
-                // Show some error box to user
-                Console.WriteLine($"{nameof(SelectViewModel)} - An error occurred while selecting the View.");
-            }
-        }
 
-        public async override Task LoadAsync()
+        public void User_NavigateAfterLogin()
         {
-            if (SelectedViewModel is not null)
-            {
-                await SelectedViewModel.LoadAsync();
-            }
+            SelectedViewModel = _navigationStore.SelectedViewModel;
+            SelectedViewModel.LoadAsync();
         }
     }
 }

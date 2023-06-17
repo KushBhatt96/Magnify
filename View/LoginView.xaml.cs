@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Magnify.View
 {
     /// <summary>
-    /// Interaction logic for ProjectItemView.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class ProjectItemView : UserControl
+    public partial class LoginView : UserControl
     {
-        public ProjectItemView()
+        public LoginView()
         {
             InitializeComponent();
         }

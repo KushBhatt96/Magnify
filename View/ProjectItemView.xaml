@@ -1,29 +1,110 @@
-﻿<Page x:Class="Magnify.View.ProjectItemView"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Magnify.View"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="ProjectItemView">
-
+﻿<UserControl x:Class="Magnify.View.ProjectItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Magnify.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#f7f6f4">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="250"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0"
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Grid.Row="0"
                    FontSize="32"
-                   Margin="30 30 20 20">
-            Project - Some Project
-        </TextBlock>
+                   Margin="20 30 0 20">
+                Project:
+            </TextBlock>
+            <TextBlock Grid.Row="0"
+                   FontSize="32"
+                   Margin="5 30 20 20" 
+                   Text="{Binding Title}"/>
+        </StackPanel>
         <Border Grid.Row="1"
-            Margin="30 0 30 20">
+                Background="white"
+                Margin="30 0 30 20"
+                BorderThickness="1"
+                BorderBrush="Black">
             <Border.Effect>
                 <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
             </Border.Effect>
+            <Grid Margin="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           FontSize="18"
+                           Margin="0 0 0 20"
+                           FontFamily="Segoe UI"
+                           Text="{Binding Id}" />
+                <TextBox Grid.Row="1"
+                           Grid.Column="0"
+                           FontSize="18"
+                           Margin="0 0 0 20"
+                         MaxLength="30"
+                           FontFamily="Segoe UI"
+                           Text="{Binding Title}"/>
+                <TextBox Grid.Row="2"
+                           Grid.Column="0"
+                           FontSize="18"
+                         MaxLength="500"
+                           Margin="0 0 0 20"
+                           Height="100"
+                         TextWrapping="Wrap"
+  AcceptsReturn="True"
+  VerticalScrollBarVisibility="Visible"
+                           FontFamily="Segoe UI"
+                           Text="{Binding Description}"/>
+                <TextBlock Grid.Row="3"
+                           Grid.Column="0"
+                           FontSize="18"
+                           Margin="0 0 0 20"
+                           FontFamily="Segoe UI"        
+                           Text="{Binding CreatedAt}"/>
+                <ComboBox Grid.Row="4"
+                           Grid.Column="0"
+                           FontSize="18"
+                           Margin="0 0 0 20"
+                           FontFamily="Segoe UI"
+                           Text="{Binding ProjectType}">
+                    <ComboBoxItem Content="Desktop"/>
+                    <ComboBoxItem Content="WebClient"/>
+                    <ComboBoxItem Content="WebServer"/>
+                    <ComboBoxItem Content="Mobile"/>
+                    <ComboBoxItem Content="Game"/>
+                </ComboBox>
+                <ComboBox Grid.Row="5"
+                           Grid.Column="0"
+                           FontSize="18"
+                           Margin="0 0 0 20"
+                           FontFamily="Segoe UI"
+                           Text="{Binding ProjectStatus}">
+                    <ComboBoxItem Content="New"/>
+                    <ComboBoxItem Content="Development"/>
+                    <ComboBoxItem Content="CodeReview"/>
+                    <ComboBoxItem Content="Testing"/>
+                    <ComboBoxItem Content="Resolved"/>
+                </ComboBox>
+                <Button Grid.Row="5"
+                        FontSize="18"
+                        Margin="20 0 0 20"
+                        Grid.Column="1">
+                    Save
+                </Button>
+            </Grid>
         </Border>
     </Grid>
-</Page>
+</UserControl>

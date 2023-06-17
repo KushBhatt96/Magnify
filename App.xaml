@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="Resources/TreeButtonStyle.xaml" />
                 <ResourceDictionary Source="Resources/ButtonStyle.xaml" />
                 <ResourceDictionary Source="Resources/DataGridStyle.xaml"/>
+                <ResourceDictionary Source="Resources/NavigationButtonStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

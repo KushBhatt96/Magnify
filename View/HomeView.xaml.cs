@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Magnify.Data;
+using Magnify.Model.Stores;
+using Magnify.Services;
+using Magnify.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,11 +20,11 @@ using System.Windows.Shapes;
 namespace Magnify.View
 {
     /// <summary>
-    /// Interaction logic for ProjectItemView.xaml
+    /// Interaction logic for HomeView.xaml
     /// </summary>
-    public partial class ProjectItemView : UserControl
+    public partial class HomeView : UserControl
     {
-        public ProjectItemView()
+        public HomeView()
         {
             InitializeComponent();
         }

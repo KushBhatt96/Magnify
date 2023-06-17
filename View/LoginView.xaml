@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="Magnify.View.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Magnify.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="#15171a" Offset="0"/>
+                <GradientStop Color="#535963" Offset="0.8" />
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label HorizontalAlignment="Center" 
+               Margin="0 -150 0 0"
+               FontSize="24"
+               VerticalAlignment="Center"
+               Foreground="white">Login</Label>
+        <Label HorizontalAlignment="Center" 
+               Margin="-100 -60 0 0" 
+               VerticalAlignment="Center"
+               Foreground="white">Username</Label>
+        <TextBox HorizontalAlignment="Center" Margin="0 -25 0 0" VerticalAlignment="Center" Width="150"/>
+        <Label HorizontalAlignment="Center" 
+               Margin="-100 40 0 0" 
+               VerticalAlignment="Center"
+               Foreground="white">Password</Label>
+        <PasswordBox HorizontalAlignment="Center" Margin="0 75 0 0" VerticalAlignment="Center" Width="150"/>
+        <Button HorizontalAlignment="Center" 
+               Margin="0 150 0 0" 
+                Width="50"
+               VerticalAlignment="Center"
+                Command="{Binding LoginCommand}">
+            Login
+        </Button>
+    </Grid>
+</UserControl>

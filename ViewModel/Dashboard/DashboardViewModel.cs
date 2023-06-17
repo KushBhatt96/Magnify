@@ -19,7 +19,7 @@ namespace Magnify.ViewModel
         {
             _messenger = messenger;
 
-            _messenger.Subscribe<ProjectsUpdatedMessage>(this, UpdateProjectsCount);
+            _messenger.Subscribe<ProjectsUpdatedMessage>(this, UpdateProjectsCountAction);
         }
 
         public int ProjectsCount
@@ -32,7 +32,7 @@ namespace Magnify.ViewModel
             }
         }
 
-        public void UpdateProjectsCount(object state)
+        public void UpdateProjectsCountAction(object state)
         {
             ProjectsCount = ((ProjectsUpdatedMessage)state).ProjectsCount;
         }
