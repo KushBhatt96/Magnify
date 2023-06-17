@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Magnify.Command;
 using Magnify.Data;
-using Magnify.Interfaces;
+using Magnify.Interfaces.Services;
 using Magnify.Model;
 using Magnify.Model.Messages;
 using Magnify.Model.Stores;
@@ -16,7 +16,7 @@ namespace Magnify.ViewModel
         #region Private Fields
         private readonly IProjectDataProvider _projectDataProvider;
 
-        private readonly IMessenger _messenger;
+        private readonly IMessengerService _messenger;
 
         private readonly NavigationStore _navigationStore;
 
@@ -28,19 +28,19 @@ namespace Magnify.ViewModel
 
         public DelegateCommand DeleteProjectCommand { get; }
 
-        public DelegateCommand NavigateToProjectDetailsCommand { get; }
+        public DelegateCommand NavigateToProjecItemCommand { get; }
 
         public ObservableCollection<ProjectItemViewModel> Projects { get; } = new ObservableCollection<ProjectItemViewModel>();
         #endregion
 
-        public ProjectsViewModel(IProjectDataProvider projectDataProvider, IMessenger messenger, NavigationStore navigationStore)
+        public ProjectsViewModel(IProjectDataProvider projectDataProvider, IMessengerService messenger, NavigationStore navigationStore)
         {
             _projectDataProvider = projectDataProvider;
             _messenger = messenger;
             _navigationStore = navigationStore;
             AddProjectCommand = new DelegateCommand(AddProject);
             DeleteProjectCommand = new DelegateCommand(DeleteProject);
-            NavigateToProjectDetailsCommand = new DelegateCommand(NavigateToProjectDetails);
+            NavigateToProjecItemCommand = new DelegateCommand(NavigateToProjectItem);
         }
 
         #region Full Properties
@@ -85,7 +85,7 @@ namespace Magnify.ViewModel
             _messenger.Send(new ProjectsUpdatedMessage(Projects.Count));
         }
 
-        public void NavigateToProjectDetails(object? parameter)
+        public void NavigateToProjectItem(object? parameter)
         {
             if(SelectedProject == null)
             {

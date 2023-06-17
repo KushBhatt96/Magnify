@@ -1,4 +1,4 @@
-﻿using Magnify.Interfaces;
+﻿using Magnify.Interfaces.Services;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -6,26 +6,26 @@ using System.Linq;
 
 namespace Magnify.Services
 {
-    public class Messenger : IMessenger
+    public class MessengerService : IMessengerService
     {
         private readonly ConcurrentDictionary<Type, List<Subscription>> _subscriptions;
 
         private readonly ConcurrentDictionary<Type, object> _currentState;
 
-        private Messenger()
+        private MessengerService()
         {
             _subscriptions = new ConcurrentDictionary<Type, List<Subscription>>();
             _currentState = new ConcurrentDictionary<Type, object>();
         }
 
-        private static Messenger instance = null;
-        public static Messenger Instance
+        private static MessengerService instance = null;
+        public static MessengerService Instance
         {
             get
             {
                 if(instance == null)
                 {
-                    instance = new Messenger();
+                    instance = new MessengerService();
                 }
                 return instance;
             }

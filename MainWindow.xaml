@@ -7,18 +7,20 @@
         xmlns:viewModel="clr-namespace:Magnify.ViewModel"
         mc:Ignorable="d"
         Title="Magnify Issue Tracker" Height="700" Width="1050" FontSize="16"
-        FontFamily="Corbel" WindowStartupLocation="CenterScreen"
+        FontFamily="Corbel" WindowStyle="None" WindowStartupLocation="CenterScreen"
         MinHeight="600" MinWidth="1000">
-    <Grid>
-        <ContentControl Content="{Binding SelectedViewModel}">
-            <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
-                    <view:LoginView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
-                    <view:HomeView />
-                </DataTemplate>
-            </ContentControl.Resources>
-        </ContentControl>
-    </Grid>
+    <ContentControl 
+            Content="{Binding SelectedViewModel}">
+        <ContentControl.Resources>
+            <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
+                <view:LoginView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
+                <view:HomeView />
+            </DataTemplate>
+        </ContentControl.Resources>
+    </ContentControl>
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="1" CornerRadius="0" CaptionHeight="75"/>
+    </WindowChrome.WindowChrome>
 </Window>

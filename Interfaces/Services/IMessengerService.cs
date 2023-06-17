@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Magnify.Interfaces
+namespace Magnify.Interfaces.Services
 {
-    public interface IMessenger
+    public interface IMessengerService
     {
         void Send<TMessage>(TMessage message);
 

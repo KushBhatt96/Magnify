@@ -1,23 +1,18 @@
 ﻿using Magnify.Command;
 using Magnify.Model;
+using Magnify.Model.Stores;
 
 namespace Magnify.ViewModel
 {
     public class ProjectItemViewModel : BaseViewModel
     {
-        #region fields
         private readonly Project _project;
-        #endregion
 
-        #region ctor
         public ProjectItemViewModel(Project project)
         {
             _project = project;
         }
-        #endregion
 
-        #region full properties
-        // Make Id a readonly property by not having a setter. We can use expression-bodied syntax here.
         public int Id => _project.Id;
 
         public string? Title
@@ -40,7 +35,6 @@ namespace Magnify.ViewModel
             }
         }
 
-        // Make CreatedAt a readonly property by not having a setter. We can use expression-bodied syntax here.
         public string CreatedAt => _project.CreatedAt != null ? _project.CreatedAt : "";
 
         public ProjectType ProjectType
@@ -62,6 +56,5 @@ namespace Magnify.ViewModel
                 RaisePropertyChanged();
             }
         }
-        #endregion
     }
 }

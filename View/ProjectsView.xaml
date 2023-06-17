@@ -64,7 +64,7 @@
                     <Button.Effect>
                         <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
                     </Button.Effect>
-                    <Image Source="/Images/add_large.png"/>
+                    <Image Source="/Resources/Images/add_large.png"/>
                 </Button>
             </StackPanel>
         </Grid>
@@ -134,9 +134,9 @@
                                         Height="24"
                                         Background="#fafafa"
                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
-                                              Path=DataContext.NavigateToProjectDetailsCommand}"
+                                              Path=DataContext.NavigateToProjecItemCommand}"
                                         BorderBrush="Transparent">
-                                        <Image Source="/Images/edit_small.png"/>
+                                        <Image Source="/Resources/Images/edit_small.png"/>
                                     </Button>
                                     <Button Width="24"
                                         Height="24"
@@ -145,7 +145,7 @@
                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
                                               Path=DataContext.DeleteProjectCommand}"
                                         BorderBrush="Transparent">
-                                        <Image Source="/Images/delete_small.png"/>
+                                        <Image Source="/Resources/Images/delete_small.png"/>
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
@@ -169,7 +169,7 @@
                     <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
                 </Button.Effect>
                 <StackPanel Orientation="Horizontal" >
-                    <Image Source="/Images/excel.png"/>
+                    <Image Source="/Resources/Images/excel.png"/>
                     <Label>
                         Export to Excel
                     </Label>
@@ -184,7 +184,7 @@
                     <Button.Effect>
                         <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
                     </Button.Effect>
-                    <Image Source="/Images/back.png"/>
+                    <Image Source="/Resources/Images/back.png"/>
                 </Button>
                 <TextBox Width="30"
                          Height="32"
@@ -201,7 +201,7 @@
                     <Button.Effect>
                         <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
                     </Button.Effect>
-                    <Image Source="/Images/forward.png"/>
+                    <Image Source="/Resources/Images/forward.png"/>
                 </Button>
             </StackPanel>
         </Grid>

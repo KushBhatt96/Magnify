@@ -8,72 +8,60 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\add.png" />
-    <None Remove="Images\add_large.png" />
-    <None Remove="Images\add_small.png" />
-    <None Remove="Images\back.png" />
-    <None Remove="Images\back_arrow_small.png" />
-    <None Remove="Images\bug_icon.png" />
-    <None Remove="Images\butterfly_large.png" />
-    <None Remove="Images\close.png" />
-    <None Remove="Images\delete_small.png" />
-    <None Remove="Images\edit_small.png" />
-    <None Remove="Images\excel.png" />
-    <None Remove="Images\forward.png" />
-    <None Remove="Images\forward_arrow_small.png" />
-    <None Remove="Images\maximize.png" />
-    <None Remove="Images\minimize.png" />
+    <None Remove="Resources\Images\add_large.png" />
+    <None Remove="Resources\Images\back.png" />
+    <None Remove="Resources\Images\back_arrow_small.png" />
+    <None Remove="Resources\Images\butterfly_large.png" />
+    <None Remove="Resources\Images\close.png" />
+    <None Remove="Resources\Images\delete_small.png" />
+    <None Remove="Resources\Images\edit_small.png" />
+    <None Remove="Resources\Images\excel.png" />
+    <None Remove="Resources\Images\forward.png" />
+    <None Remove="Resources\Images\forward_arrow_small.png" />
+    <None Remove="Resources\Images\maximize.png" />
+    <None Remove="Resources\Images\minimize.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controls\" />
+    <Folder Include="View\Controls\" />
     <Folder Include="Converter\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\add.png">
+    <Resource Include="Resources\Images\add_large.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\add_large.png">
+    <Resource Include="Resources\Images\back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\add_small.png">
+    <Resource Include="Resources\Images\back_arrow_small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\back.png">
+    <Resource Include="Resources\Images\butterfly_large.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\back_arrow_small.png">
+    <Resource Include="Resources\Images\close.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\bug_icon.png">
+    <Resource Include="Resources\Images\delete_small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\butterfly_large.png">
+    <Resource Include="Resources\Images\edit_small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\close.png">
+    <Resource Include="Resources\Images\excel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\delete_small.png">
+    <Resource Include="Resources\Images\forward.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\edit_small.png">
+    <Resource Include="Resources\Images\forward_arrow_small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\excel.png">
+    <Resource Include="Resources\Images\maximize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\forward.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\forward_arrow_small.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\maximize.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\minimize.png">
+    <Resource Include="Resources\Images\minimize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

@@ -1,6 +1,4 @@
-﻿
-
-using Magnify.Command;
+﻿using Magnify.Command;
 using Magnify.Model.Stores;
 using System;
 using System.Windows;
@@ -9,29 +7,28 @@ namespace Magnify.ViewModel
 {
     public class LoginViewModel : BaseViewModel
     {
+        private readonly BaseViewModel _redirectionViewModel;
         private readonly NavigationStore _navigationStore;
-        private readonly BaseViewModel _initialViewModel;
-
-        private string? _userName;
+        
+        private string? _username;
         private string? _password;
 
         public DelegateCommand LoginCommand { get; }
 
-        public LoginViewModel(NavigationStore navigationStore, BaseViewModel initialViewModel)
+        public LoginViewModel(BaseViewModel redirectionViewModel, NavigationStore navigationStore)
         {
-            LoginCommand = new DelegateCommand(ExecuteLogin);
-
+            _redirectionViewModel = redirectionViewModel;
             _navigationStore = navigationStore;
 
-            _initialViewModel = initialViewModel;
+            LoginCommand = new DelegateCommand(Login);
         }
 
-        public string? UserName
+        public string? Username
         {
-            get => _userName;
+            get => _username;
             set
             {
-                _userName = value;
+                _username = value;
                 RaisePropertyChanged();
             }
         }
@@ -46,18 +43,16 @@ namespace Magnify.ViewModel
             }
         }
 
-        public void ExecuteLogin(object? parameter)
+        public void Login(object? parameter)
         {
             try
             {
-                MessageBox.Show($"Logging in {UserName}...");
-
-                _navigationStore.SelectedViewModel = _initialViewModel;
-
+                MessageBox.Show($"Logging in {Username}...");
+                _navigationStore.SelectedViewModel = _redirectionViewModel;
             }
             catch (Exception)
             {
-                // Log message over here
+                // TODO: Add logging here
                 MessageBox.Show("Login failed. Please try again.");
             }
         }

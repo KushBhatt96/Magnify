@@ -4,7 +4,6 @@ namespace Magnify.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-
         private readonly NavigationStore _navigationStore;
 
         private BaseViewModel? _selectedViewModel;

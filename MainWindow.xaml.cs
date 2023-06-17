@@ -12,36 +12,29 @@ namespace Magnify
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainViewModel _viewModel;
+        private MainViewModel _mainViewModel;
         public MainWindow()
         {
             InitializeComponent();
 
-            var messenger = Messenger.Instance;
-            var authenticationNavigationStore = new NavigationStore();
+            var messenger = MessengerService.Instance;
+            var authRedirectionStore = new NavigationStore();
             var navigationStore = new NavigationStore();
 
             var dashboardViewModel = new DashboardViewModel(messenger);
             var projectsViewModel = new ProjectsViewModel(new ProjectDataProvider(), messenger, navigationStore);
             var workItemsViewModel = new WorkItemsViewModel();
 
-            
+
 
             var homeViewModel = new HomeViewModel(dashboardViewModel, projectsViewModel, workItemsViewModel, navigationStore);
-            var loginViewModel = new LoginViewModel(authenticationNavigationStore, homeViewModel);
-            
+            var loginViewModel = new LoginViewModel(homeViewModel, authRedirectionStore);
 
-            _viewModel = new MainViewModel(loginViewModel, homeViewModel, authenticationNavigationStore);
 
-            DataContext = _viewModel;
+            _mainViewModel = new MainViewModel(loginViewModel, homeViewModel, authRedirectionStore);
 
-            //Loaded += MainWindow_Loaded;
+            DataContext = _mainViewModel;
         }
-
-        //public async void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    await _viewModel.LoadAsync();
-        //}
 
         //public void MinimizeButton_Click(object sender, RoutedEventArgs e)
         //{
@@ -68,7 +61,6 @@ namespace Magnify
         //    {
         //        this.WindowState = WindowState.Maximized;
         //    }
-
         //}
     }
 }

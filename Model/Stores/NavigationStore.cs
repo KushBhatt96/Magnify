@@ -9,9 +9,10 @@ namespace Magnify.Model.Stores
 {
     public class NavigationStore
     {
+
         // TODO: Implement own "Stack" structure where we can remove from the bottom
         //       to ensure that navigation history does not exceed 10
-        private const int MaxHistory = 10;
+        private const int MaxNavigationHistory = 10;
 
         private readonly Stack<BaseViewModel> _firstNavigationStack;
 
@@ -38,7 +39,6 @@ namespace Magnify.Model.Stores
                 }
 
                 RaiseNavigationChanged();
-
             }
         }
 
@@ -65,7 +65,7 @@ namespace Magnify.Model.Stores
         public Action? NavigationChanged;
 
 
-        public NavigationStore(BaseViewModel? initialViewModel = null)
+        public NavigationStore()
         {
             _firstNavigationStack = new Stack<BaseViewModel>();
             _secondNavigationStack = new Stack<BaseViewModel>();

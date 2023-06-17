@@ -13,27 +13,59 @@
                 <GradientStop Color="#535963" Offset="0.8" />
             </LinearGradientBrush>
         </Grid.Background>
-        <Label HorizontalAlignment="Center" 
-               Margin="0 -150 0 0"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" 
+            Grid.Column="2"
+                  HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal"
+                        Margin="20 20">
+                <Button Style="{StaticResource ButtonStyle}"
+                            Margin="0 0 10 0">
+                    <Image Source="/Resources/Images/minimize.png"/>
+                </Button>
+                <Button Style="{StaticResource ButtonStyle}"
+                            Margin="0 0 10 0">
+                    <Image Source="/Resources/Images/maximize.png"/>
+                </Button>
+                <Button Style="{StaticResource ButtonStyle}"
+                            Margin="0 0 0 0">
+                    <Image Source="/Resources/Images/close.png"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1"
+              Grid.Column="1">
+            <Label HorizontalAlignment="Center" 
+               Margin="0 -225 0 0"
                FontSize="24"
                VerticalAlignment="Center"
                Foreground="white">Login</Label>
-        <Label HorizontalAlignment="Center" 
-               Margin="-100 -60 0 0" 
+            <Label HorizontalAlignment="Center" 
+               Margin="-100 -135 0 0" 
                VerticalAlignment="Center"
                Foreground="white">Username</Label>
-        <TextBox HorizontalAlignment="Center" Margin="0 -25 0 0" VerticalAlignment="Center" Width="150"/>
-        <Label HorizontalAlignment="Center" 
-               Margin="-100 40 0 0" 
+            <TextBox HorizontalAlignment="Center" Margin="0 -100 0 0" VerticalAlignment="Center" Width="150"/>
+            <Label HorizontalAlignment="Center" 
+               Margin="-100 -35 0 0" 
                VerticalAlignment="Center"
                Foreground="white">Password</Label>
-        <PasswordBox HorizontalAlignment="Center" Margin="0 75 0 0" VerticalAlignment="Center" Width="150"/>
-        <Button HorizontalAlignment="Center" 
-               Margin="0 150 0 0" 
+            <PasswordBox HorizontalAlignment="Center" Margin="0 0 0 0" VerticalAlignment="Center" Width="150"/>
+            <Button HorizontalAlignment="Center" 
+               Margin="0 75 0 0" 
                 Width="50"
                VerticalAlignment="Center"
                 Command="{Binding LoginCommand}">
-            Login
-        </Button>
+                Login
+            </Button>
+        </Grid>
+
     </Grid>
 </UserControl>

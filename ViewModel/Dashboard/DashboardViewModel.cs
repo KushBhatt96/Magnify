@@ -1,21 +1,15 @@
-﻿using Magnify.Interfaces;
+﻿using Magnify.Interfaces.Services;
 using Magnify.Model.Messages;
-using Magnify.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Magnify.ViewModel
 {
     public class DashboardViewModel : BaseViewModel
     {
-        private readonly IMessenger _messenger;
+        private readonly IMessengerService _messenger;
 
         private int _projectsCount;
 
-        public DashboardViewModel(IMessenger messenger)
+        public DashboardViewModel(IMessengerService messenger)
         {
             _messenger = messenger;
 

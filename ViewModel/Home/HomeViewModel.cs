@@ -10,14 +10,14 @@ namespace Magnify.ViewModel
     {
         private readonly NavigationStore _navigationStore;
 
-        private BaseViewModel? _selectedCenterViewModel;
+        private BaseViewModel? _selectedMainFrameViewModel;
 
-        public BaseViewModel? SelectedCenterViewModel
+        public BaseViewModel? SelectedMainFrameViewModel
         {
-            get => _selectedCenterViewModel;
+            get => _selectedMainFrameViewModel;
             set
             {
-                _selectedCenterViewModel = value;
+                _selectedMainFrameViewModel = value;
 
                 NavigateBackCommand.RaiseCanExecuteChanged();
                 NavigateForwardCommand.RaiseCanExecuteChanged();
@@ -30,7 +30,7 @@ namespace Magnify.ViewModel
         public ProjectsViewModel ProjectsViewModel { get; }
         public WorkItemsViewModel WorkItemsViewModel { get; }
 
-        public DelegateCommand SelectCenterViewModelCommand { get; }
+        public DelegateCommand SelectMainFrameViewModelCommand { get; }
         public DelegateCommand NavigateBackCommand { get; }
         public DelegateCommand NavigateForwardCommand { get; }
 
@@ -43,15 +43,15 @@ namespace Magnify.ViewModel
             NavigateBackCommand = new DelegateCommand(NavigateBackward, CanNavigateBackward);
             NavigateForwardCommand = new DelegateCommand(NavigateForward, CanNavigateForward);
 
-            SelectedCenterViewModel = projectsViewModel;
+            SelectedMainFrameViewModel = projectsViewModel;
 
-            SelectCenterViewModelCommand = new DelegateCommand(SelectCenterViewModel);
+            SelectMainFrameViewModelCommand = new DelegateCommand(SelectMainFrameViewModel);
 
             _navigationStore = navigationStore;
             _navigationStore.NavigationChanged += HomeView_NavigationChanged;
         }
 
-        public void SelectCenterViewModel(object? parameter)
+        public void SelectMainFrameViewModel(object? parameter)
         {
             try
             {
@@ -65,10 +65,8 @@ namespace Magnify.ViewModel
             }
             catch (Exception)
             {
-                // Log error here
-
-                // TODO: Improve error popup strategy
-                MessageBox.Show("");
+                // TODO: Add Logging here
+                MessageBox.Show("Error occurred while changing main frame view.");
             }
         }
 
@@ -88,14 +86,14 @@ namespace Magnify.ViewModel
 
         public void HomeView_NavigationChanged()
         {
-            SelectedCenterViewModel = _navigationStore.SelectedViewModel;
+            SelectedMainFrameViewModel = _navigationStore.SelectedViewModel;
         }
 
         public async override Task LoadAsync()
         {
-            if(SelectedCenterViewModel is not null)
+            if(SelectedMainFrameViewModel is not null)
             {
-                await SelectedCenterViewModel.LoadAsync();
+                await SelectedMainFrameViewModel.LoadAsync();
             }
         }
 

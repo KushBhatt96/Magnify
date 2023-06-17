@@ -7,10 +7,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/TreeButtonStyle.xaml" />
-                <ResourceDictionary Source="Resources/ButtonStyle.xaml" />
-                <ResourceDictionary Source="Resources/DataGridStyle.xaml"/>
-                <ResourceDictionary Source="Resources/NavigationButtonStyle.xaml" />
+                <ResourceDictionary Source="Resources/Styles/TreeButtonStyle.xaml" />
+                <ResourceDictionary Source="Resources/Styles/ButtonStyle.xaml" />
+                <ResourceDictionary Source="Resources/Styles/DataGridStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/NavigationButtonStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -11,7 +11,7 @@
         <Grid.Background>
             <LinearGradientBrush>
                 <GradientStop Color="#15171a" Offset="0"/>
-                <GradientStop Color="#535963" Offset="0.8" />
+                <GradientStop Color="#535963" Offset="1" />
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <Image Source="/Images/butterfly_large.png" Width="40" Margin="10"/>
+                <Image Source="/Resources/Images/butterfly_large.png" Width="40" Margin="10"/>
                 <TextBlock Foreground="#fafafa" FontSize="32" FontWeight="DemiBold" VerticalAlignment="Center"
                        HorizontalAlignment="Center">
                        Magnify
@@ -38,37 +38,34 @@
                     Style="{StaticResource NavigationButtonStyle}"
                     Margin="20 0 0 0"
                     Command="{Binding NavigateBackCommand}">
-                        <Image Source="/Images/back_arrow_small.png"/>
+                        <Image Source="/Resources/Images/back_arrow_small.png"/>
                     </Button>
                     <Button 
                     Style="{StaticResource NavigationButtonStyle}"
                     Margin="5 0 0 0"
                     Command="{Binding NavigateForwardCommand}">
-                        <Image Source="/Images/forward_arrow_small.png"/>
+                        <Image Source="/Resources/Images/forward_arrow_small.png"/>
                     </Button>
                 </StackPanel>
             </Grid>
-            <!--<Grid Grid.Column="2"
+            <Grid Grid.Column="2"
                   HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal"
                         Margin="20 20">
                     <Button Style="{StaticResource ButtonStyle}"
-                            Margin="0 0 10 0"
-                            Click="MinimizeButton_Click">
-                        <Image Source="/Images/minimize.png"/>
+                            Margin="0 0 10 0">
+                        <Image Source="/Resources/Images/minimize.png"/>
                     </Button>
                     <Button Style="{StaticResource ButtonStyle}"
-                            Margin="0 0 10 0"
-                            Click="MaximizeButton_Click">
-                        <Image Source="/Images/maximize.png"/>
+                            Margin="0 0 10 0">
+                        <Image Source="/Resources/Images/maximize.png"/>
                     </Button>
                     <Button Style="{StaticResource ButtonStyle}"
-                            Margin="0 0 0 0"
-                            Click="CloseButton_Click">
-                        <Image Source="/Images/close.png"/>
+                            Margin="0 0 0 0">
+                        <Image Source="/Resources/Images/close.png"/>
                     </Button>
                 </StackPanel>
-            </Grid>-->
+            </Grid>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
@@ -78,25 +75,25 @@
             <StackPanel Grid.Column="0">
                 <RadioButton Foreground="#fafafa"
                         Style="{StaticResource TreeButtonStyle}"
-                        Command="{Binding SelectCenterViewModelCommand}"
+                        Command="{Binding SelectMainFrameViewModelCommand}"
                         CommandParameter="{Binding DashboardViewModel}">
                     Dashboard
                 </RadioButton>
                 <RadioButton Foreground="#fafafa"
                         Style="{StaticResource TreeButtonStyle}"
-                        Command="{Binding SelectCenterViewModelCommand}"
+                        Command="{Binding SelectMainFrameViewModelCommand}"
                         CommandParameter="{Binding ProjectsViewModel}">
                     Projects
                 </RadioButton>
                 <RadioButton Foreground="#fafafa"
                         Style="{StaticResource TreeButtonStyle}"
-                        Command="{Binding SelectCenterViewModelCommand}"
+                        Command="{Binding SelectMainFrameViewModelCommand}"
                         CommandParameter="{Binding WorkItemsViewModel}">
                     Work Items
                 </RadioButton>
             </StackPanel>
             <ContentControl Grid.Column="1"
-                        Content="{Binding SelectedCenterViewModel}">
+                        Content="{Binding SelectedMainFrameViewModel}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type viewModel:DashboardViewModel}">
                         <view:DashboardView/>
