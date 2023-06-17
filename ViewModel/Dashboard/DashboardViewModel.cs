@@ -1,5 +1,6 @@
 ﻿using Magnify.Interfaces.Services;
 using Magnify.Model.Messages;
+using Magnify.Services;
 
 namespace Magnify.ViewModel
 {
@@ -9,9 +10,9 @@ namespace Magnify.ViewModel
 
         private int _projectsCount;
 
-        public DashboardViewModel(IMessengerService messenger)
+        public DashboardViewModel()
         {
-            _messenger = messenger;
+            _messenger = MessengerService.Instance;
 
             _messenger.Subscribe<ProjectsUpdatedMessage>(this, UpdateProjectsCountAction);
         }

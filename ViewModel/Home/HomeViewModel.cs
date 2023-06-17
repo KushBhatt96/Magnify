@@ -1,5 +1,6 @@
 ﻿using Magnify.Command;
-using Magnify.Model.Stores;
+using Magnify.Interfaces.Services;
+using Magnify.Services;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,7 +9,8 @@ namespace Magnify.ViewModel
 {
     public class HomeViewModel : BaseViewModel
     {
-        private readonly NavigationStore _navigationStore;
+        private readonly INavigationService _navigationService;
+        private readonly IAuthenticationService _authService;
 
         private BaseViewModel? _selectedMainFrameViewModel;
 
@@ -34,21 +36,31 @@ namespace Magnify.ViewModel
         public DelegateCommand NavigateBackCommand { get; }
         public DelegateCommand NavigateForwardCommand { get; }
 
-        public HomeViewModel(DashboardViewModel dashboardViewModel, ProjectsViewModel projectsViewModel, WorkItemsViewModel workItemsViewModel, NavigationStore navigationStore)
+        public DelegateCommand LogoutCommand { get; }
+
+        public HomeViewModel(DashboardViewModel dashboardViewModel, ProjectsViewModel projectsViewModel, WorkItemsViewModel workItemsViewModel)
         {
             DashboardViewModel = dashboardViewModel;
             ProjectsViewModel = projectsViewModel;
             WorkItemsViewModel = workItemsViewModel;
 
-            NavigateBackCommand = new DelegateCommand(NavigateBackward, CanNavigateBackward);
-            NavigateForwardCommand = new DelegateCommand(NavigateForward, CanNavigateForward);
+            NavigateBackCommand = new DelegateCommand(NavigateBackward
+                //CanNavigateBackward
+                );
+            NavigateForwardCommand = new DelegateCommand(NavigateForward
+                //CanNavigateForward
+                );
+
+            LogoutCommand = new DelegateCommand(Logout);
 
             SelectedMainFrameViewModel = projectsViewModel;
 
             SelectMainFrameViewModelCommand = new DelegateCommand(SelectMainFrameViewModel);
 
-            _navigationStore = navigationStore;
-            _navigationStore.NavigationChanged += HomeView_NavigationChanged;
+            _navigationService = NavigationService.Instance;
+            _navigationService.NavigationChanged += HomeView_NavigationChanged;
+
+            _authService = AuthenticationService.Instance;
         }
 
         public void SelectMainFrameViewModel(object? parameter)
@@ -59,7 +71,7 @@ namespace Magnify.ViewModel
 
                 if (selectedViewModel != null)
                 {
-                    _navigationStore.SelectedViewModel = selectedViewModel;
+                    _navigationService.Navigate(selectedViewModel);
                 }
 
             }
@@ -72,26 +84,31 @@ namespace Magnify.ViewModel
 
         public void NavigateBackward(object? parameter)
         {
-            _navigationStore.PreviousViewModel();
+            //_navigationStore.PreviousViewModel();
         }
 
-        public bool CanNavigateBackward(object? parameter) => _navigationStore.FirstStackCount() > 1;
+        //public bool CanNavigateBackward(object? parameter) => _navigationStore.FirstStackCount() > 1;
 
         public void NavigateForward(object? parameter)
         {
-            _navigationStore.NextViewModel();
+            //_navigationStore.NextViewModel();
         }
 
-        public bool CanNavigateForward(object? parameter) => _navigationStore.SecondStackCount() > 0;
+        //public bool CanNavigateForward(object? parameter) => _navigationStore.SecondStackCount() > 0;
 
-        public void HomeView_NavigationChanged()
+        public void Logout(object? parameter)
         {
-            SelectedMainFrameViewModel = _navigationStore.SelectedViewModel;
+            _authService.Logout();
+        }
+
+        public void HomeView_NavigationChanged(object? sender, EventArgs e)
+        {
+            SelectedMainFrameViewModel = _navigationService.CurrentNavigationState();
         }
 
         public async override Task LoadAsync()
         {
-            if(SelectedMainFrameViewModel is not null)
+            if (SelectedMainFrameViewModel is not null)
             {
                 await SelectedMainFrameViewModel.LoadAsync();
             }

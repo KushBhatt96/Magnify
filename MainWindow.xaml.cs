@@ -17,21 +17,7 @@ namespace Magnify
         {
             InitializeComponent();
 
-            var messenger = MessengerService.Instance;
-            var authRedirectionStore = new NavigationStore();
-            var navigationStore = new NavigationStore();
-
-            var dashboardViewModel = new DashboardViewModel(messenger);
-            var projectsViewModel = new ProjectsViewModel(new ProjectDataProvider(), messenger, navigationStore);
-            var workItemsViewModel = new WorkItemsViewModel();
-
-
-
-            var homeViewModel = new HomeViewModel(dashboardViewModel, projectsViewModel, workItemsViewModel, navigationStore);
-            var loginViewModel = new LoginViewModel(homeViewModel, authRedirectionStore);
-
-
-            _mainViewModel = new MainViewModel(loginViewModel, homeViewModel, authRedirectionStore);
+            _mainViewModel = new MainViewModel();
 
             DataContext = _mainViewModel;
         }

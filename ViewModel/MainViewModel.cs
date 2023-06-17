@@ -1,10 +1,14 @@
-﻿using Magnify.Model.Stores;
+﻿using Magnify.Interfaces.Services;
+using Magnify.Model.Stores;
+using Magnify.Services;
+using System;
+using System.Windows.Navigation;
 
 namespace Magnify.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {
-        private readonly NavigationStore _navigationStore;
+        private readonly IAuthenticationService _authService;
 
         private BaseViewModel? _selectedViewModel;
 
@@ -18,25 +22,19 @@ namespace Magnify.ViewModel
             }
         }
 
-        public LoginViewModel LoginViewModel { get; }
-        public HomeViewModel HomeViewModel { get; }
-
-        public MainViewModel(LoginViewModel loginViewModel, HomeViewModel homeViewModel, NavigationStore navigationStore)
+        public MainViewModel()
         {
-            LoginViewModel = loginViewModel;
-            HomeViewModel = homeViewModel;
+            SelectedViewModel = new LoginViewModel();
 
-            SelectedViewModel = loginViewModel;
-
-            _navigationStore = navigationStore;
-            _navigationStore.NavigationChanged += User_NavigateAfterLogin;
+            _authService = AuthenticationService.Instance;
+            _authService.RedirectionOccurred += User_RedirectAfterLogin;
         }
 
 
-        public void User_NavigateAfterLogin()
+        public void User_RedirectAfterLogin(BaseViewModel viewModel)
         {
-            SelectedViewModel = _navigationStore.SelectedViewModel;
-            SelectedViewModel.LoadAsync();
+            SelectedViewModel = viewModel;
+            SelectedViewModel?.LoadAsync();
         }
     }
 }

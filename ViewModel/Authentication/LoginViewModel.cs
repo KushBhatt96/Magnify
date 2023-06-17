@@ -1,5 +1,6 @@
 ﻿using Magnify.Command;
-using Magnify.Model.Stores;
+using Magnify.Interfaces.Services;
+using Magnify.Services;
 using System;
 using System.Windows;
 
@@ -7,18 +8,16 @@ namespace Magnify.ViewModel
 {
     public class LoginViewModel : BaseViewModel
     {
-        private readonly BaseViewModel _redirectionViewModel;
-        private readonly NavigationStore _navigationStore;
+        private readonly IAuthenticationService _authService;
         
         private string? _username;
         private string? _password;
 
         public DelegateCommand LoginCommand { get; }
 
-        public LoginViewModel(BaseViewModel redirectionViewModel, NavigationStore navigationStore)
+        public LoginViewModel()
         {
-            _redirectionViewModel = redirectionViewModel;
-            _navigationStore = navigationStore;
+            _authService = AuthenticationService.Instance;
 
             LoginCommand = new DelegateCommand(Login);
         }
@@ -45,10 +44,15 @@ namespace Magnify.ViewModel
 
         public void Login(object? parameter)
         {
+            Password = "Test";
+            if(string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
+            {
+                MessageBox.Show("Please fill in your credentials.");
+                return;
+            }
             try
             {
-                MessageBox.Show($"Logging in {Username}...");
-                _navigationStore.SelectedViewModel = _redirectionViewModel;
+                _authService.Login(Username, Password);
             }
             catch (Exception)
             {

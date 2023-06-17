@@ -7,7 +7,7 @@ using Magnify.Data;
 using Magnify.Interfaces.Services;
 using Magnify.Model;
 using Magnify.Model.Messages;
-using Magnify.Model.Stores;
+using Magnify.Services;
 
 namespace Magnify.ViewModel
 {
@@ -18,7 +18,7 @@ namespace Magnify.ViewModel
 
         private readonly IMessengerService _messenger;
 
-        private readonly NavigationStore _navigationStore;
+        private readonly INavigationService _navigationService;
 
         private ProjectItemViewModel? _selectedProject;
         #endregion
@@ -33,11 +33,11 @@ namespace Magnify.ViewModel
         public ObservableCollection<ProjectItemViewModel> Projects { get; } = new ObservableCollection<ProjectItemViewModel>();
         #endregion
 
-        public ProjectsViewModel(IProjectDataProvider projectDataProvider, IMessengerService messenger, NavigationStore navigationStore)
+        public ProjectsViewModel(IProjectDataProvider projectDataProvider)
         {
             _projectDataProvider = projectDataProvider;
-            _messenger = messenger;
-            _navigationStore = navigationStore;
+            _messenger = MessengerService.Instance;
+            _navigationService = NavigationService.Instance;
             AddProjectCommand = new DelegateCommand(AddProject);
             DeleteProjectCommand = new DelegateCommand(DeleteProject);
             NavigateToProjecItemCommand = new DelegateCommand(NavigateToProjectItem);
@@ -91,8 +91,7 @@ namespace Magnify.ViewModel
             {
                 return;
             }
-
-            _navigationStore.SelectedViewModel = SelectedProject;
+            _navigationService.Navigate(SelectedProject);
         }
 
         public override async Task LoadAsync()

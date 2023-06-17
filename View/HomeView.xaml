@@ -38,13 +38,13 @@
                     Style="{StaticResource NavigationButtonStyle}"
                     Margin="20 0 0 0"
                     Command="{Binding NavigateBackCommand}">
-                        <Image Source="/Resources/Images/back_arrow_small.png"/>
+                        <Image Source="/Resources/Images/navigate_back.png"/>
                     </Button>
                     <Button 
                     Style="{StaticResource NavigationButtonStyle}"
                     Margin="5 0 0 0"
                     Command="{Binding NavigateForwardCommand}">
-                        <Image Source="/Resources/Images/forward_arrow_small.png"/>
+                        <Image Source="/Resources/Images/navigate_forward.png"/>
                     </Button>
                 </StackPanel>
             </Grid>
@@ -52,6 +52,11 @@
                   HorizontalAlignment="Right">
                 <StackPanel Orientation="Horizontal"
                         Margin="20 20">
+                    <Button Style="{StaticResource ButtonStyle}"
+                            Margin="0 0 10 0"
+                            Command="{Binding LogoutCommand}">
+                        <Image Source="/Resources/Images/logout.png"/>
+                    </Button>
                     <Button Style="{StaticResource ButtonStyle}"
                             Margin="0 0 10 0">
                         <Image Source="/Resources/Images/minimize.png"/>

@@ -52,12 +52,20 @@
                Margin="-100 -135 0 0" 
                VerticalAlignment="Center"
                Foreground="white">Username</Label>
-            <TextBox HorizontalAlignment="Center" Margin="0 -100 0 0" VerticalAlignment="Center" Width="150"/>
+            <TextBox HorizontalAlignment="Center" 
+                     Margin="0 -100 0 0" 
+                     VerticalAlignment="Center" 
+                     Width="150"
+                     Text="{Binding Username, Mode=TwoWay}"/>
             <Label HorizontalAlignment="Center" 
                Margin="-100 -35 0 0" 
                VerticalAlignment="Center"
                Foreground="white">Password</Label>
-            <PasswordBox HorizontalAlignment="Center" Margin="0 0 0 0" VerticalAlignment="Center" Width="150"/>
+            <PasswordBox HorizontalAlignment="Center" 
+                         Margin="0 0 0 0" 
+                         VerticalAlignment="Center" 
+                         Width="150"
+                         Password=""/>
             <Button HorizontalAlignment="Center" 
                Margin="0 75 0 0" 
                 Width="50"

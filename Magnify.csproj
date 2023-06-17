@@ -10,16 +10,17 @@
   <ItemGroup>
     <None Remove="Resources\Images\add_large.png" />
     <None Remove="Resources\Images\back.png" />
-    <None Remove="Resources\Images\back_arrow_small.png" />
     <None Remove="Resources\Images\butterfly_large.png" />
     <None Remove="Resources\Images\close.png" />
     <None Remove="Resources\Images\delete_small.png" />
     <None Remove="Resources\Images\edit_small.png" />
     <None Remove="Resources\Images\excel.png" />
     <None Remove="Resources\Images\forward.png" />
-    <None Remove="Resources\Images\forward_arrow_small.png" />
+    <None Remove="Resources\Images\logout.png" />
     <None Remove="Resources\Images\maximize.png" />
     <None Remove="Resources\Images\minimize.png" />
+    <None Remove="Resources\Images\navigate_back.png" />
+    <None Remove="Resources\Images\navigate_forward.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,9 +33,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\back.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\back_arrow_small.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\butterfly_large.png">
@@ -55,13 +53,19 @@
     <Resource Include="Resources\Images\forward.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Images\forward_arrow_small.png">
+    <Resource Include="Resources\Images\logout.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\maximize.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\minimize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\navigate_back.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\navigate_forward.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
