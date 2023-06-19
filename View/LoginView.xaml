@@ -20,7 +20,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0" 
             Grid.Column="2"
@@ -28,52 +28,57 @@
             <StackPanel Orientation="Horizontal"
                         Margin="20 20">
                 <Button Style="{StaticResource ButtonStyle}"
-                            Margin="0 0 10 0">
+                            Margin="0 0 10 0"
+                            Click="MinimizeButton_Click">
                     <Image Source="/Resources/Images/minimize.png"/>
                 </Button>
                 <Button Style="{StaticResource ButtonStyle}"
-                            Margin="0 0 10 0">
+                            Margin="0 0 10 0"
+                            Click="MaximizeButton_Click">
                     <Image Source="/Resources/Images/maximize.png"/>
                 </Button>
                 <Button Style="{StaticResource ButtonStyle}"
-                            Margin="0 0 0 0">
+                            Margin="0 0 0 0"
+                            Click="CloseButton_Click">
                     <Image Source="/Resources/Images/close.png"/>
                 </Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1"
               Grid.Column="1">
+            <Image Source="/Resources/Images/butterfly_large.png" 
+                   Height="100"
+                   Width="100" 
+                   Margin="0 0 0 350"/>
             <Label HorizontalAlignment="Center" 
-               Margin="0 -225 0 0"
-               FontSize="24"
+               Margin="0 0 0 225"
+               FontSize="16"
                VerticalAlignment="Center"
-               Foreground="white">Login</Label>
-            <Label HorizontalAlignment="Center" 
-               Margin="-100 -135 0 0" 
-               VerticalAlignment="Center"
-               Foreground="white">Username</Label>
-            <TextBox HorizontalAlignment="Center" 
-                     Margin="0 -100 0 0" 
+               Foreground="white">Welcome to Magnify</Label>
+            <TextBox Style="{StaticResource TextBoxStyle}"
+                HorizontalAlignment="Center"
+                     Height="30"
+                     Width="250"
+                     Margin="0 0 0 150" 
                      VerticalAlignment="Center" 
-                     Width="150"
                      Text="{Binding Username, Mode=TwoWay}"/>
-            <Label HorizontalAlignment="Center" 
-               Margin="-100 -35 0 0" 
-               VerticalAlignment="Center"
-               Foreground="white">Password</Label>
-            <PasswordBox HorizontalAlignment="Center" 
-                         Margin="0 0 0 0" 
-                         VerticalAlignment="Center" 
-                         Width="150"
+            <PasswordBox  
+                Style="{StaticResource PasswordBoxStyle}"
+                HorizontalAlignment="Center"
+                         Height="30"
+                            Width="250"
+                         Margin="0 0 0 50" 
+                         VerticalAlignment="Center"
                          Password=""/>
-            <Button HorizontalAlignment="Center" 
-               Margin="0 75 0 0" 
-                Width="50"
+            <Button HorizontalAlignment="Center"
+                    Height="30"
+                    Margin="0 0 0 -50"
+               Width="75"
                VerticalAlignment="Center"
-                Command="{Binding LoginCommand}">
+                Command="{Binding LoginCommand}"
+                    Cursor="Hand">
                 Login
             </Button>
         </Grid>
-
     </Grid>
 </UserControl>

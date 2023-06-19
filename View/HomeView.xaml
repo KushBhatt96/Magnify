@@ -58,15 +58,18 @@
                         <Image Source="/Resources/Images/logout.png"/>
                     </Button>
                     <Button Style="{StaticResource ButtonStyle}"
-                            Margin="0 0 10 0">
+                            Margin="0 0 10 0"
+                            Click="MinimizeButton_Click">
                         <Image Source="/Resources/Images/minimize.png"/>
                     </Button>
                     <Button Style="{StaticResource ButtonStyle}"
-                            Margin="0 0 10 0">
+                            Margin="0 0 10 0"
+                            Click="MaximizeButton_Click">
                         <Image Source="/Resources/Images/maximize.png"/>
                     </Button>
                     <Button Style="{StaticResource ButtonStyle}"
-                            Margin="0 0 0 0">
+                            Margin="0 0 0 0"
+                            Click="CloseButton_Click">
                         <Image Source="/Resources/Images/close.png"/>
                     </Button>
                 </StackPanel>
