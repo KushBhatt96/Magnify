@@ -2,6 +2,7 @@
 using Magnify.Model.Stores;
 using Magnify.ViewModel;
 using System;
+using System.Windows;
 
 namespace Magnify.Services
 {
@@ -9,13 +10,15 @@ namespace Magnify.Services
     {
         private static NavigationService? _instance = null;
 
-        private readonly NavigationStore _navigationStore;
+        private readonly NavigationStack _firstNavigationStack;
+        private readonly NavigationStack _secondNavigationStack;
 
         public event EventHandler? NavigationChanged;
 
-        private NavigationService(NavigationStore navigationStore)
+        private NavigationService()
         {
-            _navigationStore = navigationStore;
+            _firstNavigationStack = new NavigationStack();
+            _secondNavigationStack = new NavigationStack();
         }
 
         public static NavigationService Instance
@@ -24,7 +27,7 @@ namespace Magnify.Services
             {
                 if (_instance == null)
                 {
-                    _instance = new NavigationService(new NavigationStore());
+                    _instance = new NavigationService();
                 }
                 return _instance;
             }
@@ -33,18 +36,57 @@ namespace Magnify.Services
 
         public void Navigate(BaseViewModel viewModel)
         {
-            if (viewModel is null)
+            if (viewModel is null || viewModel == _firstNavigationStack.Peek())
             {
                 return;
             }
 
-            _navigationStore.SelectedViewModel = viewModel;
+            _firstNavigationStack.Push(new NavigationNode(viewModel));
+            _secondNavigationStack.Clear();
             RaiseNavigationChangedEvent();
+        }
+
+        public void NavigateBack()
+        {
+            if (_firstNavigationStack.Count <= 1) // Do not pop if only single navigation node remaining
+            {
+                return;
+            }
+            var node = _firstNavigationStack.Pop();
+            if (node != null)
+            {
+                _secondNavigationStack.Push(node);
+                RaiseNavigationChangedEvent();
+            }
+        }
+
+        public bool CanNavigateBack() => _firstNavigationStack.Count > 1;
+
+        public void NavigateForward()
+        {
+            var node = _secondNavigationStack.Pop();
+            if (node != null)
+            {
+                _firstNavigationStack.Push(node);
+                RaiseNavigationChangedEvent();
+            }
+        }
+
+        public bool CanNavigateForward() => _secondNavigationStack.Count > 0;
+
+        public void SetInitialNavigationState(BaseViewModel viewModel)
+        {
+            if (viewModel == null)
+            {
+                return;
+            }
+
+            _firstNavigationStack.Push(new NavigationNode(viewModel));
         }
 
         public BaseViewModel? CurrentNavigationState()
         {
-            return _navigationStore.SelectedViewModel;
+            return _firstNavigationStack.Peek();
         }
 
         private void RaiseNavigationChangedEvent()

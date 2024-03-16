@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,14 @@ namespace Magnify.Model
 {
     public class Project
     {
-        public int Id { get; set; }
-        public string? Title { get; set; }
-        public string? Description { get; set; }
-        public string? CreatedAt { get; set; }
+        public Guid Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string CreatedAt { get; set; } = string.Empty;
         public ProjectType ProjectType { get; set; }
         public ProjectStatus ProjectStatus { get; set; }
 
+        public IList<WorkItem> WorkItems { get; set; } = new List<WorkItem>();
     }
 
     public enum ProjectType
@@ -23,15 +25,16 @@ namespace Magnify.Model
         WebClient,
         WebServer,
         Mobile,
-        Game
+        Game,
+        Other
     }
 
     public enum ProjectStatus
     {
         New,
-        Development,
-        CodeReview,
-        Testing,
-        Resolved
+        Active,
+        OnHold,
+        Completed,
+        Closed
     }
 }

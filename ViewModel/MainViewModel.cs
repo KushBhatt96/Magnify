@@ -1,4 +1,5 @@
-﻿using Magnify.Interfaces.Services;
+﻿using Magnify.Data;
+using Magnify.Interfaces.Services;
 using Magnify.Model.Stores;
 using Magnify.Services;
 using System;
@@ -24,7 +25,14 @@ namespace Magnify.ViewModel
 
         public MainViewModel()
         {
-            SelectedViewModel = new LoginViewModel();
+            // TODO: Change to LoginViewModel
+            SelectedViewModel = new HomeViewModel(
+                new DashboardViewModel(), new ProjectsViewModel(ProjectDataProvider.Instance),
+                new WorkItemsViewModel(), new StoryBoardViewModel(),
+                new ChatViewModel()
+                );
+            // TODO: Remove this line after changing to LoginViewModel
+            SelectedViewModel?.LoadAsync();
 
             _authService = AuthenticationService.Instance;
             _authService.RedirectionOccurred += User_RedirectAfterLogin;

@@ -25,134 +25,118 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0"
-                        Orientation="Horizontal"
-                        Margin="30 0 10 0">
-                <Label Width="150"
-                       Height="32"
-                       HorizontalContentAlignment="left">
-                    Currently Selected
-                </Label>
-                <ComboBox Width="225"
-                          Height="32"
-                          VerticalContentAlignment="Center">
-                    <ComboBox.Effect>
-                        <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
-                    </ComboBox.Effect>
-                    <ComboBoxItem Content="ESummit"/>
-                    <ComboBoxItem Content="Kali Teeri"/>
-                    <ComboBoxItem Content="Home Fresh"/>
-                </ComboBox>
-            </StackPanel>
             <StackPanel Grid.Column="1"
                         Orientation="Horizontal" 
                         Margin="10 0 30 0">
-                <TextBox Width="275"
+                <Label Height="32"
+                       Margin="0 5 10 5"
+                       VerticalContentAlignment="Center"
+                       FontWeight="Bold">
+                    Search
+                </Label>
+                <TextBox Style="{StaticResource TextBoxStyle}"
+                         Width="275"
                          Margin="0 5 0 5"
                          Height="32"
                          VerticalContentAlignment="Center"
-                         Text="Search...">
-                    <TextBox.Effect>
-                        <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
-                    </TextBox.Effect>
+                         Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 </TextBox>
                 <Button Width="32"
                         Height="32"
                         Margin="20 0 0 0"
                         Background="#fafafa"
-                        Command="{Binding AddProjectCommand}">
-                    <Button.Effect>
-                        <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
-                    </Button.Effect>
+                        Command="{Binding AddProjectCommand}"
+                        BorderBrush="Transparent">
                     <Image Source="/Resources/Images/add_large.png"/>
                 </Button>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
-            <DataGrid
-                      Margin="30 10"
+            <Border
+                Background="white"
+                Margin="30 10"
+                CornerRadius="5">
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5" BlurRadius="15" />
+                </Border.Effect>
+                <DataGrid
                       IsReadOnly="true"
                       AutoGenerateColumns="false"
                       FontSize="14"
                       FontFamily="Segoe UI"
-                      GridLinesVisibility="Horizontal"
+                      GridLinesVisibility="All"
                       HorizontalGridLinesBrush="LightGray"
+                      VerticalGridLinesBrush="LightGray"
                       HeadersVisibility="Column"
-                      BorderBrush="gray"
-                      ItemsSource="{Binding Projects}"
+                      BorderBrush="Transparent"
+                      ItemsSource="{Binding FilteredProjects}"
                       SelectedItem="{Binding SelectedProject, Mode=TwoWay}">
-                <DataGrid.Resources>
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                    <DataGrid.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
                    Color="#ebc96a"/>
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" 
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" 
                    Color="black"/>
-                </DataGrid.Resources>
-                <DataGrid.Effect>
-                    <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
-                </DataGrid.Effect>
-                <DataGrid.ColumnHeaderStyle>
-                    <StaticResource ResourceKey="DataGridColumnHeaderStyle" />
-                </DataGrid.ColumnHeaderStyle>
-                <DataGrid.RowStyle>
-                    <StaticResource ResourceKey="DataGridRowStyle"/>
-                </DataGrid.RowStyle>
-                <DataGrid.CellStyle>
-                    <StaticResource ResourceKey="DataGridCellStyle"/>
-                </DataGrid.CellStyle>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id"
-                                    MinWidth="50"
-                                    MaxWidth="50"
-                                    Binding="{Binding Id}"/>
-                    <DataGridTextColumn Header="Title"
+                    </DataGrid.Resources>
+                    <DataGrid.ColumnHeaderStyle>
+                        <StaticResource ResourceKey="DataGridColumnHeaderStyle" />
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.RowStyle>
+                        <StaticResource ResourceKey="DataGridRowStyle"/>
+                    </DataGrid.RowStyle>
+                    <DataGrid.CellStyle>
+                        <StaticResource ResourceKey="DataGridCellStyle"/>
+                    </DataGrid.CellStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Title"
                                     MinWidth="100"
-                                    Width="*"
+                                    Width="auto"
                                     Binding="{Binding Title}"/>
-                    <DataGridTextColumn Header="Description"
+                        <DataGridTextColumn Header="Description"
                                     MinWidth="200"
-                                    Width="2*"
+                                    Width="*"
                                     Binding="{Binding Description}"/>
-                    <DataGridTextColumn Header="Created At"
+                        <DataGridTextColumn Header="Created At"
                                     MinWidth="100"
-                                    Width="*"
+                                    Width="auto"
                                     Binding="{Binding CreatedAt}"/>
-                    <DataGridTextColumn Header="Type"
+                        <DataGridTextColumn Header="Type"
                                     MinWidth="100"
-                                    Width="*"
+                                    Width="auto"
                                     Binding="{Binding ProjectType}"/>
-                    <DataGridTextColumn Header="Status"
+                        <DataGridTextColumn Header="Status"
                                     MinWidth="100"
-                                    Width="*"
+                                    Width="auto"
                                     Binding="{Binding ProjectStatus}"/>
-                    <DataGridTemplateColumn Header="Details" 
+                        <DataGridTemplateColumn Header="Options" 
                                     MinWidth="75"
                                     MaxWidth="75">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Width="24"
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Width="24"
                                         Height="24"
                                         Background="#fafafa"
                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
                                               Path=DataContext.NavigateToProjecItemCommand}"
                                         BorderBrush="Transparent">
-                                        <Image Source="/Resources/Images/edit_small.png"/>
-                                    </Button>
-                                    <Button Width="24"
+                                            <Image Source="/Resources/Images/edit_small.png"/>
+                                        </Button>
+                                        <Button Width="24"
                                         Height="24"
                                         Margin="10 0 0 0"
                                         Background="#fafafa"
                                         Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}},
                                               Path=DataContext.DeleteProjectCommand}"
                                         BorderBrush="Transparent">
-                                        <Image Source="/Resources/Images/delete_small.png"/>
-                                    </Button>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                                            <Image Source="/Resources/Images/delete_small.png"/>
+                                        </Button>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
         </Grid>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
@@ -164,10 +148,8 @@
                     Width="150"
                     Height="32"
                     Margin="30 0 0 20"
-                    Background="#fafafa">
-                <Button.Effect>
-                    <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
-                </Button.Effect>
+                    Background="#fafafa"
+                    BorderBrush="Transparent">
                 <StackPanel Orientation="Horizontal" >
                     <Image Source="/Resources/Images/excel.png"/>
                     <Label>
@@ -180,27 +162,20 @@
                         Margin="0 0 30 20">
                 <Button
                     Height="32"
-                    Background="#fafafa">
-                    <Button.Effect>
-                        <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
-                    </Button.Effect>
+                    Background="#fafafa"
+                    BorderBrush="Transparent">
                     <Image Source="/Resources/Images/back.png"/>
                 </Button>
                 <TextBox Width="30"
                          Height="32"
                          VerticalContentAlignment="Center"
                          HorizontalContentAlignment="Center">
-                    <TextBox.Effect>
-                        <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
-                    </TextBox.Effect>
                     1
                 </TextBox>
                 <Button
                     Height="32"
-                    Background="#fafafa">
-                    <Button.Effect>
-                        <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
-                    </Button.Effect>
+                    Background="#fafafa"
+                    BorderBrush="Transparent">
                     <Image Source="/Resources/Images/forward.png"/>
                 </Button>
             </StackPanel>

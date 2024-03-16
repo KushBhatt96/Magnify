@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Documents;
 using Magnify.Command;
 using Magnify.Data;
 using Magnify.Interfaces.Services;
@@ -14,13 +19,13 @@ namespace Magnify.ViewModel
     public class ProjectsViewModel : BaseViewModel
     {
         #region Private Fields
-        private readonly IProjectDataProvider _projectDataProvider;
-
         private readonly IMessengerService _messenger;
 
         private readonly INavigationService _navigationService;
 
         private ProjectItemViewModel? _selectedProject;
+
+        private string _searchText;
         #endregion
 
         #region Public Properties
@@ -30,13 +35,24 @@ namespace Magnify.ViewModel
 
         public DelegateCommand NavigateToProjecItemCommand { get; }
 
-        public ObservableCollection<ProjectItemViewModel> Projects { get; } = new ObservableCollection<ProjectItemViewModel>();
+        private ObservableCollection<ProjectItemViewModel> Projects { get; } = new ObservableCollection<ProjectItemViewModel>();
+
+        private ObservableCollection<ProjectItemViewModel> _filteredProjects = new ObservableCollection<ProjectItemViewModel>();
+        public ObservableCollection<ProjectItemViewModel> FilteredProjects
+        {
+            get => _filteredProjects;
+            set
+            {
+                _filteredProjects = value;
+                RaisePropertyChanged();
+            }
+        }
         #endregion
 
-        public ProjectsViewModel(IProjectDataProvider projectDataProvider)
+        public ProjectsViewModel(ProjectDataProvider projectDataProvider)
         {
-            _projectDataProvider = projectDataProvider;
             _messenger = MessengerService.Instance;
+            _messenger.Subscribe<ProjectItemViewModel>(this, UpdateProjectsAction);
             _navigationService = NavigationService.Instance;
             AddProjectCommand = new DelegateCommand(AddProject);
             DeleteProjectCommand = new DelegateCommand(DeleteProject);
@@ -53,41 +69,49 @@ namespace Magnify.ViewModel
                 RaisePropertyChanged();
             }
         }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                FilteredProjects = new ObservableCollection<ProjectItemViewModel>(Projects.Where(p => p.Title.ToLower().Contains(_searchText.ToLower())));
+                RaisePropertyChanged();
+            }
+        }
         #endregion
 
         #region Public Methods
         public void AddProject(object? parameter)
         {
-            Project project = new Project
+            Guid newId = Guid.NewGuid();
+            Project project = new Project()
             {
-                Id = Projects.Count + 1,
-                Title = "NEW PROJECT",
-                Description = "This is a cool new one.",
-                CreatedAt = DateTime.Now.ToShortDateString(),
-                ProjectType = ProjectType.Mobile,
-                ProjectStatus = ProjectStatus.New
+                Id = newId
             };
-
             ProjectItemViewModel projectItem = new ProjectItemViewModel(project);
 
-            Projects.Add(projectItem);
-            _messenger.Send(new ProjectsUpdatedMessage(Projects.Count));
+            _navigationService.Navigate(projectItem);
+            SearchText = string.Empty;
         }
 
         public void DeleteProject(object? parameter)
         {
-            if(SelectedProject == null)
+            if (SelectedProject == null)
             {
                 return;
             }
+            
 
             Projects.Remove(SelectedProject);
+            SearchText = string.Empty;
             _messenger.Send(new ProjectsUpdatedMessage(Projects.Count));
         }
 
         public void NavigateToProjectItem(object? parameter)
         {
-            if(SelectedProject == null)
+            if (SelectedProject == null)
             {
                 return;
             }
@@ -101,7 +125,9 @@ namespace Magnify.ViewModel
                 return;
             }
 
-            var projects = await _projectDataProvider.GetProjectsAsync();
+            Projects.CollectionChanged += OnCollectionChanged;
+
+            var projects = ProjectDataProvider.Instance.Projects;
 
             if (projects != null)
             {
@@ -111,6 +137,36 @@ namespace Magnify.ViewModel
                 }
             }
             _messenger.Send(new ProjectsUpdatedMessage(Projects.Count));
+        }
+
+        private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            FilteredProjects = Projects;
+        }
+
+        private void UpdateProjectsAction(object state)
+        {
+            try
+            {
+                ProjectItemViewModel project = (ProjectItemViewModel)state;
+                if (!Projects.Contains(project))
+                {
+                    Projects.Add(project);
+                    _messenger.Send(new ProjectsUpdatedMessage(Projects.Count));
+                }
+
+            }
+            catch (InvalidCastException)
+            {
+                // TODO: Logging here
+                MessageBox.Show("Error: The project state is not valid.");
+            }
+            catch (Exception)
+            {
+                // TODO: Logging here
+                MessageBox.Show("Error: Unknown error occurred while adding project.");
+            }
+
         }
         #endregion
     }

@@ -16,13 +16,10 @@ namespace Magnify.ViewModel
 
         public BaseViewModel? SelectedMainFrameViewModel
         {
-            get => _selectedMainFrameViewModel;
+            get => _selectedMainFrameViewModel; // this is an expression bodied member, logic only consists of returning field
             set
             {
                 _selectedMainFrameViewModel = value;
-
-                NavigateBackCommand.RaiseCanExecuteChanged();
-                NavigateForwardCommand.RaiseCanExecuteChanged();
 
                 RaisePropertyChanged();
             }
@@ -31,6 +28,8 @@ namespace Magnify.ViewModel
         public DashboardViewModel DashboardViewModel { get; }
         public ProjectsViewModel ProjectsViewModel { get; }
         public WorkItemsViewModel WorkItemsViewModel { get; }
+        public StoryBoardViewModel StoryBoardViewModel { get; }
+        public ChatViewModel ChatViewModel { get; }
 
         public DelegateCommand SelectMainFrameViewModelCommand { get; }
         public DelegateCommand NavigateBackCommand { get; }
@@ -38,27 +37,27 @@ namespace Magnify.ViewModel
 
         public DelegateCommand LogoutCommand { get; }
 
-        public HomeViewModel(DashboardViewModel dashboardViewModel, ProjectsViewModel projectsViewModel, WorkItemsViewModel workItemsViewModel)
+        public HomeViewModel(DashboardViewModel dashboardViewModel, ProjectsViewModel projectsViewModel, WorkItemsViewModel workItemsViewModel, 
+                             StoryBoardViewModel storyBoardViewModel, ChatViewModel chatViewModel)
         {
             DashboardViewModel = dashboardViewModel;
             ProjectsViewModel = projectsViewModel;
             WorkItemsViewModel = workItemsViewModel;
-
-            NavigateBackCommand = new DelegateCommand(NavigateBackward
-                //CanNavigateBackward
-                );
-            NavigateForwardCommand = new DelegateCommand(NavigateForward
-                //CanNavigateForward
-                );
+            StoryBoardViewModel = storyBoardViewModel;
+            ChatViewModel = chatViewModel;
 
             LogoutCommand = new DelegateCommand(Logout);
 
-            SelectedMainFrameViewModel = projectsViewModel;
+            SelectedMainFrameViewModel = dashboardViewModel;
 
             SelectMainFrameViewModelCommand = new DelegateCommand(SelectMainFrameViewModel);
 
             _navigationService = NavigationService.Instance;
+            _navigationService.SetInitialNavigationState(SelectedMainFrameViewModel);
             _navigationService.NavigationChanged += HomeView_NavigationChanged;
+
+            NavigateBackCommand = new DelegateCommand(NavigateBackward, (object? obj) => _navigationService.CanNavigateBack());
+            NavigateForwardCommand = new DelegateCommand(NavigateForward, (object? obj) => _navigationService.CanNavigateForward());
 
             _authService = AuthenticationService.Instance;
         }
@@ -67,11 +66,13 @@ namespace Magnify.ViewModel
         {
             try
             {
-                var selectedViewModel = parameter as BaseViewModel;
+                var selectedViewModel = parameter as BaseViewModel; // explicit conversion from object to BaseViewModel, returns null if parameter is not of BaseViewModel type
 
                 if (selectedViewModel != null)
                 {
                     _navigationService.Navigate(selectedViewModel);
+                    NavigateBackCommand.RaiseCanExecuteChanged();
+                    NavigateForwardCommand.RaiseCanExecuteChanged();
                 }
 
             }
@@ -84,14 +85,18 @@ namespace Magnify.ViewModel
 
         public void NavigateBackward(object? parameter)
         {
-            //_navigationStore.PreviousViewModel();
+            _navigationService.NavigateBack();
+            NavigateBackCommand.RaiseCanExecuteChanged();
+            NavigateForwardCommand.RaiseCanExecuteChanged();
         }
 
         //public bool CanNavigateBackward(object? parameter) => _navigationStore.FirstStackCount() > 1;
 
         public void NavigateForward(object? parameter)
         {
-            //_navigationStore.NextViewModel();
+            _navigationService.NavigateForward();
+            NavigateForwardCommand.RaiseCanExecuteChanged();
+            NavigateBackCommand.RaiseCanExecuteChanged();
         }
 
         //public bool CanNavigateForward(object? parameter) => _navigationStore.SecondStackCount() > 0;
@@ -108,10 +113,12 @@ namespace Magnify.ViewModel
 
         public async override Task LoadAsync()
         {
-            if (SelectedMainFrameViewModel is not null)
-            {
-                await SelectedMainFrameViewModel.LoadAsync();
-            }
+            // Load each of the views for the application
+            // The reason we load the data for all views right away is so that the Dashboard can get latest metrics
+            // and we can show it
+            await DashboardViewModel.LoadAsync();
+            await ProjectsViewModel.LoadAsync();
+            await WorkItemsViewModel.LoadAsync();
         }
 
     }

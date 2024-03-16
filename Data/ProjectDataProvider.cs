@@ -1,46 +1,135 @@
 ﻿using Magnify.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Magnify.Data
 {
-    public interface IProjectDataProvider
-    {
-        Task<IEnumerable<Project>> GetProjectsAsync();
-    }
 
-    public class ProjectDataProvider : IProjectDataProvider
+    public class ProjectDataProvider
     {
-        public async Task<IEnumerable<Project>> GetProjectsAsync()
+        private static ProjectDataProvider _instance;
+
+        public IList<Project> Projects { get; set; }
+        public IList<WorkItem> WorkItems { get; set; }
+
+        private ProjectDataProvider()
         {
-            await Task.Delay(100); // Simulate a bit of server work
+            GetProjects();
+            GetWorkItems();
+            CreateRelationShip();
+        }
 
-            return new List<Project>
+        public static ProjectDataProvider Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new ProjectDataProvider();
+                }
+                return _instance;
+            }
+        }
+
+        private void CreateRelationShip()
+        {
+            WorkItems[0].ProjectId = Projects[0].Id;
+            WorkItems[1].ProjectId = Projects[0].Id;
+            WorkItems[2].ProjectId = Projects[0].Id;
+            WorkItems[3].ProjectId = Projects[2].Id;
+
+            Projects[0].WorkItems.Add(WorkItems[0]);
+            Projects[0].WorkItems.Add(WorkItems[1]);
+            Projects[0].WorkItems.Add(WorkItems[2]);
+            Projects[2].WorkItems.Add(WorkItems[3]);
+        }
+        private void GetWorkItems()
+        {
+            var workItemIdOne = Guid.NewGuid();
+            var workItemIdTwo = Guid.NewGuid();
+            var workItemIdThree = Guid.NewGuid();
+            var workItemIdFour = Guid.NewGuid();
+
+            WorkItems = new List<WorkItem>
+                    {
+                        new WorkItem
+                        {
+                            WorkItemId = workItemIdOne,
+                            Title = "Complete the Authentication!",
+                            Description = "This is a very important STORY blah blah blah...",
+                            OwnerId = Guid.NewGuid(),
+                            StoryPoints = 3,
+                            WorkItemType = WorkItemType.Story,
+                            WorkItemStatus = WorkItemStatus.Development,
+                            CreatedAt = DateTime.Now.AddMonths(-3).ToShortDateString(),
+                        },
+                        new WorkItem
+                        {
+                            WorkItemId = workItemIdTwo,
+                            Title = "Fix bug!",
+                            Description = "This is a very important BUG",
+                            OwnerId = Guid.NewGuid(),
+                            StoryPoints = 5,
+                            WorkItemType = WorkItemType.Bug,
+                            WorkItemStatus = WorkItemStatus.Review,
+                            CreatedAt = DateTime.Now.AddMonths(-2).ToShortDateString(),
+                        },
+                        new WorkItem
+                        {
+                            WorkItemId = workItemIdThree,
+                            Title = "Fix another bug!",
+                            Description = "This is the second BUG",
+                            OwnerId = Guid.NewGuid(),
+                            StoryPoints = 1,
+                            WorkItemType = WorkItemType.Bug,
+                            WorkItemStatus = WorkItemStatus.Review,
+                            CreatedAt = DateTime.Now.AddMonths(-2).ToShortDateString(),
+                        },
+                        new WorkItem
+                        {
+                            WorkItemId = workItemIdFour,
+                            Title = "Create UI for HomeFresh in React Native.",
+                            Description = "Need to create very awesome design for the FE. Will need to use React Native.",
+                            OwnerId = Guid.NewGuid(),
+                            StoryPoints = 8,
+                            WorkItemType = WorkItemType.Story,
+                            WorkItemStatus = WorkItemStatus.Development,
+                            CreatedAt = DateTime.Now.AddMonths(-2).ToShortDateString(),
+                        }
+                    };
+        }
+        private void GetProjects()
+        {
+
+            var projectIdOne = Guid.NewGuid();
+            var projectIdTwo = Guid.NewGuid();
+            var projectIdThree = Guid.NewGuid();
+            var projectIdFour = Guid.NewGuid();
+
+            Projects = new List<Project>
             {
                 new Project
                 {
-                    Id = 1,
+                    Id = projectIdOne,
                     Title = "ESummit Server",
                     Description = "Web server for the coolest online shopping site.",
                     CreatedAt = DateTime.Now.AddMonths(-3).ToShortDateString(),
                     ProjectType = ProjectType.WebServer,
-                    ProjectStatus = ProjectStatus.Development,
+                    ProjectStatus = ProjectStatus.OnHold,
                 },
                 new Project
                 {
-                    Id = 2,
+                    Id = projectIdTwo,
                     Title = "ESummit Client",
                     Description = "Web client for the awesomest online shopping site.",
                     CreatedAt = DateTime.Now.AddMonths(-2).ToShortDateString(),
                     ProjectType = ProjectType.WebClient,
-                    ProjectStatus = ProjectStatus.Development,
+                    ProjectStatus = ProjectStatus.OnHold,
                 },
                 new Project
                 {
-                    Id = 3,
+                    Id = projectIdThree,
                     Title = "Home Fresh",
                     Description = "Best mobile app for home made food!",
                     CreatedAt = DateTime.Now.AddMonths(-1).ToShortDateString(),
@@ -49,85 +138,13 @@ namespace Magnify.Data
                 },
                 new Project
                 {
-                    Id = 4,
-                    Title = "ESummit Server",
-                    Description = "Web server for the coolest online shopping site.",
-                    CreatedAt = DateTime.Now.AddMonths(-3).ToShortDateString(),
-                    ProjectType = ProjectType.WebServer,
-                    ProjectStatus = ProjectStatus.Development,
-                },
-                new Project
-                {
-                    Id = 5,
-                    Title = "ESummit Client",
-                    Description = "Web client for the awesomest online shopping site.",
-                    CreatedAt = DateTime.Now.AddMonths(-2).ToShortDateString(),
-                    ProjectType = ProjectType.WebClient,
-                    ProjectStatus = ProjectStatus.Development,
-                },
-                new Project
-                {
-                    Id = 6,
-                    Title = "Home Fresh",
-                    Description = "Best mobile app for home made food!",
+                    Id = projectIdFour,
+                    Title = "Dating App",
+                    Description = "Best dating app of all time!",
                     CreatedAt = DateTime.Now.AddMonths(-1).ToShortDateString(),
                     ProjectType = ProjectType.Mobile,
                     ProjectStatus = ProjectStatus.New,
-                },
-                new Project
-                {
-                    Id = 7,
-                    Title = "ESummit Server",
-                    Description = "Web server for the coolest online shopping site.",
-                    CreatedAt = DateTime.Now.AddMonths(-3).ToShortDateString(),
-                    ProjectType = ProjectType.WebServer,
-                    ProjectStatus = ProjectStatus.Development,
-                },
-                new Project
-                {
-                    Id = 8,
-                    Title = "ESummit Client",
-                    Description = "Web client for the awesomest online shopping site.",
-                    CreatedAt = DateTime.Now.AddMonths(-2).ToShortDateString(),
-                    ProjectType = ProjectType.WebClient,
-                    ProjectStatus = ProjectStatus.Development,
-                },
-                new Project
-                {
-                    Id = 9,
-                    Title = "Home Fresh",
-                    Description = "Best mobile app for home made food!",
-                    CreatedAt = DateTime.Now.AddMonths(-1).ToShortDateString(),
-                    ProjectType = ProjectType.Mobile,
-                    ProjectStatus = ProjectStatus.New,
-                },
-                new Project
-                {
-                    Id = 10,
-                    Title = "ESummit Server",
-                    Description = "Web server for the coolest online shopping site.",
-                    CreatedAt = DateTime.Now.AddMonths(-3).ToShortDateString(),
-                    ProjectType = ProjectType.WebServer,
-                    ProjectStatus = ProjectStatus.Development,
-                },
-                new Project
-                {
-                    Id = 11,
-                    Title = "ESummit Client",
-                    Description = "Web client for the awesomest online shopping site.",
-                    CreatedAt = DateTime.Now.AddMonths(-2).ToShortDateString(),
-                    ProjectType = ProjectType.WebClient,
-                    ProjectStatus = ProjectStatus.Development,
-                },
-                new Project
-                {
-                    Id = 12,
-                    Title = "Home Fresh",
-                    Description = "Best mobile app for home made food!",
-                    CreatedAt = DateTime.Now.AddMonths(-1).ToShortDateString(),
-                    ProjectType = ProjectType.Mobile,
-                    ProjectStatus = ProjectStatus.New,
-                },
+                }
             };
         }
     }

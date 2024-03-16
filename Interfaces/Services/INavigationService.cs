@@ -9,6 +9,16 @@ namespace Magnify.Interfaces.Services
 
         void Navigate(BaseViewModel viewModel);
 
+        void NavigateBack();
+
+        bool CanNavigateBack();
+
+        void NavigateForward();
+
+        bool CanNavigateForward();
+
+        void SetInitialNavigationState(BaseViewModel viewModel);
+
         BaseViewModel? CurrentNavigationState();
     }
 }

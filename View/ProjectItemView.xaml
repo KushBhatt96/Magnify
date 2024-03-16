@@ -14,22 +14,24 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBlock Grid.Row="0"
-                   FontSize="32"
-                   Margin="20 30 0 20">
+                       FontSize="32"
+                       FontWeight="DemiBold"
+                       VerticalAlignment="Center"
+                       Margin="30 30 0 20">
                 Project:
             </TextBlock>
             <TextBlock Grid.Row="0"
-                   FontSize="32"
-                   Margin="5 30 20 20" 
+                   FontSize="28"
+                   Margin="5 30 20 20"
+                   VerticalAlignment="Center"
                    Text="{Binding Title}"/>
         </StackPanel>
         <Border Grid.Row="1"
                 Background="white"
                 Margin="30 0 30 20"
-                BorderThickness="1"
-                BorderBrush="Black">
+                CornerRadius="5">
             <Border.Effect>
-                <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
+                <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5" BlurRadius="15" />
             </Border.Effect>
             <Grid Margin="30">
                 <Grid.RowDefinitions>
@@ -44,52 +46,84 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0"
-                           Grid.Column="0"
-                           FontSize="18"
-                           Margin="0 0 0 20"
+                <StackPanel Grid.Row="0"
+                            Grid.Column="0"
+                            Orientation="Vertical">
+                    <Label FontSize="16"
                            FontFamily="Segoe UI"
-                           Text="{Binding Id}" />
-                <TextBox Grid.Row="1"
-                           Grid.Column="0"
-                           FontSize="18"
-                           Margin="0 0 0 20"
-                         MaxLength="30"
+                           FontWeight="DemiBold">
+                        Title
+                    </Label>
+                    <TextBox Style="{StaticResource TextBoxStyle}"
+                             FontSize="16"
+                             Margin="0 0 0 15"
+                             MaxLength="30"
+                             Height="28"
+                             FontFamily="Segoe UI"
+                             Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Orientation="Vertical">
+                    <Label FontSize="16"
                            FontFamily="Segoe UI"
-                           Text="{Binding Title}"/>
-                <TextBox Grid.Row="2"
-                           Grid.Column="0"
-                           FontSize="18"
+                           FontWeight="DemiBold">
+                        Description
+                    </Label>
+                    <TextBox Style="{StaticResource TextBoxStyle}"
+                         FontSize="16"
                          MaxLength="500"
-                           Margin="0 0 0 20"
-                           Height="100"
+                         Margin="0 0 0 15"
+                         Height="100"
                          TextWrapping="Wrap"
-  AcceptsReturn="True"
-  VerticalScrollBarVisibility="Visible"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Visible"
+                         FontFamily="Segoe UI"
+                         Text="{Binding Description}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2"
+                            Grid.Column="0"
+                            Orientation="Horizontal">
+                    <Label FontSize="16"
                            FontFamily="Segoe UI"
-                           Text="{Binding Description}"/>
-                <TextBlock Grid.Row="3"
-                           Grid.Column="0"
-                           FontSize="18"
-                           Margin="0 0 0 20"
+                           FontWeight="DemiBold">
+                        Created At:
+                    </Label>
+                    <Label FontSize="16"
+                           Margin="0 0 0 15"
                            FontFamily="Segoe UI"        
-                           Text="{Binding CreatedAt}"/>
-                <ComboBox Grid.Row="4"
-                           Grid.Column="0"
-                           FontSize="18"
-                           Margin="0 0 0 20"
+                           Content="{Binding CreatedAt}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="3"
+                            Grid.Column="0"
+                            Orientation="Vertical">
+                    <Label FontSize="16"
+                           FontFamily="Segoe UI"
+                           FontWeight="DemiBold">
+                        Type
+                    </Label>
+                    <ComboBox
+                           FontSize="16"
+                           Margin="0 0 0 15"
                            FontFamily="Segoe UI"
                            Text="{Binding ProjectType}">
-                    <ComboBoxItem Content="Desktop"/>
-                    <ComboBoxItem Content="WebClient"/>
-                    <ComboBoxItem Content="WebServer"/>
-                    <ComboBoxItem Content="Mobile"/>
-                    <ComboBoxItem Content="Game"/>
-                </ComboBox>
+                        <ComboBoxItem Content="Desktop"/>
+                        <ComboBoxItem Content="WebClient"/>
+                        <ComboBoxItem Content="WebServer"/>
+                        <ComboBoxItem Content="Mobile"/>
+                        <ComboBoxItem Content="Game"/>
+                    </ComboBox>
+                </StackPanel>
+                <Label Grid.Row="4"
+                    FontSize="16"
+                           FontFamily="Segoe UI"
+                           FontWeight="DemiBold">
+                    Status
+                </Label>
                 <ComboBox Grid.Row="5"
-                           Grid.Column="0"
-                           FontSize="18"
-                           Margin="0 0 0 20"
+                    FontSize="16"
+                           Margin="0 0 0 15"
                            FontFamily="Segoe UI"
                            Text="{Binding ProjectStatus}">
                     <ComboBoxItem Content="New"/>
@@ -99,9 +133,10 @@
                     <ComboBoxItem Content="Resolved"/>
                 </ComboBox>
                 <Button Grid.Row="5"
+                        Grid.Column="1"
                         FontSize="18"
-                        Margin="20 0 0 20"
-                        Grid.Column="1">
+                        Margin="20 0 0 15"
+                        Command="{Binding SaveCommand}">
                     Save
                 </Button>
             </Grid>

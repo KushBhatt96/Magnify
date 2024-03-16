@@ -13,7 +13,7 @@ namespace Magnify.ViewModel
         private string? _username;
         private string? _password;
 
-        public DelegateCommand LoginCommand { get; }
+        public DelegateCommand LoginCommand { get; } // Instances of DelegateCommand are get-only --> initialized only in the ctor
 
         public LoginViewModel()
         {

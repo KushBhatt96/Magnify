@@ -28,9 +28,6 @@
                     <ComboBox.Effect>
                         <DropShadowEffect Color="Black" Direction="320" ShadowDepth="1" Opacity="0.5"/>
                     </ComboBox.Effect>
-                    <ComboBoxItem Content="ESummit"/>
-                    <ComboBoxItem Content="Kali Teeri"/>
-                    <ComboBoxItem Content="Home Fresh"/>
                 </ComboBox>
             </StackPanel>
             <TextBlock Grid.Column="1"

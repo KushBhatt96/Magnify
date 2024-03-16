@@ -47,7 +47,11 @@ namespace Magnify.Services
 
         private void RedirectAfterLogin()
         {
-            RaiseRedirectionOccurred(new HomeViewModel(new DashboardViewModel(), new ProjectsViewModel(new ProjectDataProvider()), new WorkItemsViewModel()));
+            RaiseRedirectionOccurred(new HomeViewModel(
+                new DashboardViewModel(), new ProjectsViewModel(ProjectDataProvider.Instance),
+                new WorkItemsViewModel(), new StoryBoardViewModel(), 
+                new ChatViewModel()
+                ));
         }
 
         private void RedirectAfterLogout()

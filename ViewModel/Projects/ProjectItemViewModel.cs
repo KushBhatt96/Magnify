@@ -1,19 +1,41 @@
 ﻿using Magnify.Command;
+using Magnify.Interfaces.Services;
 using Magnify.Model;
 using Magnify.Model.Stores;
+using Magnify.Services;
+using System;
 
 namespace Magnify.ViewModel
 {
     public class ProjectItemViewModel : BaseViewModel
     {
         private readonly Project _project;
+        private readonly IMessengerService _messenger;
+        private readonly INavigationService _navigationService;
+
+        public DelegateCommand SaveCommand { get; }
 
         public ProjectItemViewModel(Project project)
         {
             _project = project;
+            _messenger = MessengerService.Instance;
+            _navigationService = NavigationService.Instance;
+            SaveCommand = new DelegateCommand(Save, CanSave);
         }
 
-        public int Id => _project.Id;
+        public void Save(object? obj)
+        {
+            CreatedAt = DateTime.Now.ToShortDateString();
+            _messenger.Send<ProjectItemViewModel>(this);
+            _navigationService.NavigateBack();
+        }
+
+        public bool CanSave(object? obj)
+        {
+            return !string.IsNullOrEmpty(Title);
+        }
+
+        public Guid Id => _project.Id;
 
         public string? Title
         {
@@ -21,6 +43,7 @@ namespace Magnify.ViewModel
             set
             {
                 _project.Title = value;
+                SaveCommand.RaiseCanExecuteChanged();
                 RaisePropertyChanged();
             }
         }
@@ -35,7 +58,26 @@ namespace Magnify.ViewModel
             }
         }
 
-        public string CreatedAt => _project.CreatedAt != null ? _project.CreatedAt : "";
+        public string? CreatedAt
+        {
+            get
+            {
+                bool parseSucceeded = DateTime.TryParse(_project.CreatedAt, out DateTime result);
+                if (parseSucceeded)
+                {
+                    return result.ToLongDateString();
+                }
+                return string.Empty;
+            }
+            set
+            {
+                if(string.IsNullOrEmpty(_project.CreatedAt))
+                {
+                    _project.CreatedAt = DateTime.Now.ToShortDateString();
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public ProjectType ProjectType
         {
