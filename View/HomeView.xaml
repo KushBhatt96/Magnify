@@ -29,12 +29,18 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <Grid />
+            <StackPanel
+                Grid.Column="0"
+                Margin="10,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
                 <Image
                     Width="40"
-                    Margin="10"
+                    Margin="0,0,10,0"
                     Source="/Resources/Images/butterfly_large.png" />
                 <TextBlock
                     HorizontalAlignment="Center"
@@ -45,50 +51,52 @@
                     Magnify
                 </TextBlock>
             </StackPanel>
-            <Grid Grid.Column="1">
-                <StackPanel Orientation="Horizontal">
-                    <Button
-                        Margin="20,0,0,0"
-                        Command="{Binding NavigateBackCommand}"
-                        Style="{StaticResource NavigationButtonStyle}">
-                        <Image Source="/Resources/Images/navigate_back.png" />
-                    </Button>
-                    <Button
-                        Margin="5,0,0,0"
-                        Command="{Binding NavigateForwardCommand}"
-                        Style="{StaticResource NavigationButtonStyle}">
-                        <Image Source="/Resources/Images/navigate_forward.png" />
-                    </Button>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Column="2" HorizontalAlignment="Right">
-                <StackPanel Margin="20,20" Orientation="Horizontal">
-                    <Button
-                        Margin="0,0,10,0"
-                        Command="{Binding LogoutCommand}"
-                        Style="{StaticResource ButtonStyle}">
-                        <Image Source="/Resources/Images/logout.png" />
-                    </Button>
-                    <Button
-                        Margin="0,0,10,0"
-                        Click="MinimizeButton_Click"
-                        Style="{StaticResource ButtonStyle}">
-                        <Image Source="/Resources/Images/minimize.png" />
-                    </Button>
-                    <Button
-                        Margin="0,0,10,0"
-                        Click="MaximizeButton_Click"
-                        Style="{StaticResource ButtonStyle}">
-                        <Image Source="/Resources/Images/maximize.png" />
-                    </Button>
-                    <Button
-                        Margin="0,0,0,0"
-                        Click="CloseButton_Click"
-                        Style="{StaticResource ButtonStyle}">
-                        <Image Source="/Resources/Images/close.png" />
-                    </Button>
-                </StackPanel>
-            </Grid>
+            <StackPanel
+                Grid.Column="1"
+                Margin="10"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Button
+                    Margin="0,0,5,0"
+                    Command="{Binding NavigateBackCommand}"
+                    Style="{StaticResource NavigationButtonStyle}">
+                    <Image Source="/Resources/Images/navigate_back.png" />
+                </Button>
+                <Button Command="{Binding NavigateForwardCommand}" Style="{StaticResource NavigationButtonStyle}">
+                    <Image Source="/Resources/Images/navigate_forward.png" />
+                </Button>
+            </StackPanel>
+            <StackPanel
+                Grid.Column="2"
+                Margin="10,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Button
+                    Margin="0,0,10,0"
+                    Command="{Binding LogoutCommand}"
+                    Style="{StaticResource ButtonStyle}">
+                    <Image Source="/Resources/Images/logout.png" />
+                </Button>
+                <Button
+                    Margin="0,0,10,0"
+                    Click="MinimizeButton_Click"
+                    Style="{StaticResource ButtonStyle}">
+                    <Image Source="/Resources/Images/minimize.png" />
+                </Button>
+                <Button
+                    Margin="0,0,10,0"
+                    Click="MaximizeButton_Click"
+                    Style="{StaticResource ButtonStyle}">
+                    <Image Source="/Resources/Images/maximize.png" />
+                </Button>
+                <Button
+                    Margin="0,0,0,0"
+                    Click="CloseButton_Click"
+                    Style="{StaticResource ButtonStyle}">
+                    <Image Source="/Resources/Images/close.png" />
+                </Button>
+            </StackPanel>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
