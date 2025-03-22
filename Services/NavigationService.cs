@@ -2,36 +2,48 @@
 using Magnify.Model.Stores;
 using Magnify.ViewModel;
 using System;
-using System.Windows;
 
 namespace Magnify.Services
 {
     public class NavigationService : INavigationService
     {
-        private static NavigationService? _instance = null;
+        private static INavigationService? _instance;
+        private static readonly object _lock = new object(); 
 
         private readonly NavigationStack _firstNavigationStack;
         private readonly NavigationStack _secondNavigationStack;
 
         public event EventHandler? NavigationChanged;
 
-        private NavigationService()
+        private NavigationService(BaseViewModel? initialViewModel)
         {
             _firstNavigationStack = new NavigationStack();
             _secondNavigationStack = new NavigationStack();
+
+            if(initialViewModel != null)
+            {
+                _firstNavigationStack.Push(new NavigationNode(initialViewModel));
+            }
         }
 
-        public static NavigationService Instance
+        public static INavigationService GetInstance(BaseViewModel? viewModel = null)
         {
-            get
+            if(_instance == null)
             {
-                if (_instance == null)
+                lock (_lock)
                 {
-                    _instance = new NavigationService();
+                    _instance = new NavigationService(viewModel);
                 }
-                return _instance;
             }
+            return _instance;
+        }
 
+        public static void SetInstance(BaseViewModel viewModel)
+        {
+            if (viewModel != null)
+            {
+                _instance = new NavigationService(viewModel);
+            }
         }
 
         public void Navigate(BaseViewModel viewModel)
@@ -73,16 +85,6 @@ namespace Magnify.Services
         }
 
         public bool CanNavigateForward() => _secondNavigationStack.Count > 0;
-
-        public void SetInitialNavigationState(BaseViewModel viewModel)
-        {
-            if (viewModel == null)
-            {
-                return;
-            }
-
-            _firstNavigationStack.Push(new NavigationNode(viewModel));
-        }
 
         public BaseViewModel? CurrentNavigationState()
         {

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 using Magnify.Command;
 using Magnify.Data;
 using Magnify.Interfaces.Services;
@@ -53,7 +50,7 @@ namespace Magnify.ViewModel
         {
             _messenger = MessengerService.Instance;
             _messenger.Subscribe<ProjectItemViewModel>(this, UpdateProjectsAction);
-            _navigationService = NavigationService.Instance;
+            _navigationService = NavigationService.GetInstance();
             AddProjectCommand = new DelegateCommand(AddProject);
             DeleteProjectCommand = new DelegateCommand(DeleteProject);
             NavigateToProjecItemCommand = new DelegateCommand(NavigateToProjectItem);
@@ -75,9 +72,12 @@ namespace Magnify.ViewModel
             get => _searchText;
             set
             {
-                _searchText = value;
-                FilteredProjects = new ObservableCollection<ProjectItemViewModel>(Projects.Where(p => p.Title.ToLower().Contains(_searchText.ToLower())));
-                RaisePropertyChanged();
+                if (value != null)
+                {
+                    _searchText = value;
+                    FilteredProjects = new ObservableCollection<ProjectItemViewModel>(Projects.Where(p => p.Title.Contains(_searchText, StringComparison.InvariantCultureIgnoreCase)));
+                    RaisePropertyChanged();
+                }
             }
         }
         #endregion
@@ -102,11 +102,27 @@ namespace Magnify.ViewModel
             {
                 return;
             }
-            
 
+            var workItems = ProjectDataProvider.Instance.WorkItems;
+            foreach(var workItem in workItems.ToList())
+            {
+                if(workItem.ProjectId == SelectedProject.Id)
+                {
+                    workItems.Remove(workItem);
+                }
+            }
+
+            var projects = ProjectDataProvider.Instance.Projects;
+            foreach(var project in projects.ToList())
+            {
+                if(project.Id == SelectedProject.Id)
+                {
+                    projects.Remove(project);
+                }
+            }
+            
             Projects.Remove(SelectedProject);
             SearchText = string.Empty;
-            _messenger.Send(new ProjectsUpdatedMessage(Projects.Count));
         }
 
         public void NavigateToProjectItem(object? parameter)
@@ -136,12 +152,12 @@ namespace Magnify.ViewModel
                     Projects.Add(new ProjectItemViewModel(project));
                 }
             }
-            _messenger.Send(new ProjectsUpdatedMessage(Projects.Count));
         }
 
         private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             FilteredProjects = Projects;
+            _messenger.Send(new ProjectsUpdatedMessage(Projects.Count));
         }
 
         private void UpdateProjectsAction(object state)
@@ -149,12 +165,10 @@ namespace Magnify.ViewModel
             try
             {
                 ProjectItemViewModel project = (ProjectItemViewModel)state;
-                if (!Projects.Contains(project))
+                if (Projects.SingleOrDefault(p => p.Id == project.Id) == null)
                 {
                     Projects.Add(project);
-                    _messenger.Send(new ProjectsUpdatedMessage(Projects.Count));
                 }
-
             }
             catch (InvalidCastException)
             {
@@ -166,7 +180,6 @@ namespace Magnify.ViewModel
                 // TODO: Logging here
                 MessageBox.Show("Error: Unknown error occurred while adding project.");
             }
-
         }
         #endregion
     }

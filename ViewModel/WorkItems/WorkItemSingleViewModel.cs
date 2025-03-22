@@ -1,15 +1,51 @@
-﻿using Magnify.Model;
+﻿using Magnify.Command;
+using Magnify.Data;
+using Magnify.Interfaces.Services;
+using Magnify.Model;
+using Magnify.Services;
 using System;
 
 namespace Magnify.ViewModel
 {
     public class WorkItemSingleViewModel : BaseViewModel
     {
+        private const string BaseIconPath = "/Resources/Images";
+        private const string BugIconPath = $"{BaseIconPath}/bug.png";
+        private const string StoryIconPath = $"{BaseIconPath}/story.png";
+
         private readonly WorkItem _workItem;
-        public WorkItemSingleViewModel(WorkItem workItem)
+        private readonly Project _selectedProject;
+        private readonly IMessengerService _messenger;
+        private readonly INavigationService _navigationService;
+
+        public DelegateCommand SaveCommand { get; }
+
+        public WorkItemSingleViewModel(WorkItem workItem, Project selectedProject)
         {
             _workItem = workItem;
+            _selectedProject = selectedProject;
+            _messenger = MessengerService.Instance;
+            _navigationService = NavigationService.GetInstance();
+            SaveCommand = new DelegateCommand(Save, CanSave);
         }
+
+        public void Save(object? obj)
+        {
+            CreatedAt = DateTime.Now.ToShortDateString();
+            _selectedProject.WorkItems.Add(_workItem);
+            ProjectDataProvider.Instance.WorkItems.Add(_workItem);
+            _messenger.Send<WorkItemSingleViewModel>(this);
+            _navigationService.NavigateBack();
+        }
+
+        public bool CanSave(object? obj)
+        {
+            return !string.IsNullOrEmpty(Title);
+        }
+
+        public Guid Id => _workItem.WorkItemId;
+
+        public Guid ProjectId => _workItem.ProjectId;
 
         public string Title
         {
@@ -17,6 +53,7 @@ namespace Magnify.ViewModel
             set
             {
                 _workItem.Title = value;
+                SaveCommand.RaiseCanExecuteChanged();
                 RaisePropertyChanged();
             }
         }
@@ -78,5 +115,7 @@ namespace Magnify.ViewModel
                 RaisePropertyChanged();
             }
         }
+
+        public string WorkItemIconPath => _workItem.WorkItemType == WorkItemType.Bug ? BugIconPath : StoryIconPath;
     }
 }

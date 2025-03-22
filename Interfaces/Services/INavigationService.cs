@@ -17,8 +17,6 @@ namespace Magnify.Interfaces.Services
 
         bool CanNavigateForward();
 
-        void SetInitialNavigationState(BaseViewModel viewModel);
-
         BaseViewModel? CurrentNavigationState();
     }
 }

@@ -1,12 +1,221 @@
-﻿<UserControl x:Class="Magnify.View.StoryBoardView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Magnify.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#fafafa">
-        <Label FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="center" FontSize="48">StoryBoard View</Label>
+﻿<UserControl
+    x:Class="Magnify.View.StoryBoardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Magnify.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid Background="#f7f6f4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Margin="30,30,20,20"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            FontSize="32">
+            Storyboard
+        </TextBlock>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.5*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                Grid.Column="0"
+                Margin="30,0,30,0"
+                Orientation="Horizontal">
+                <Label
+                    Height="32"
+                    Margin="0,5,10,5"
+                    VerticalAlignment="Center"
+                    FontWeight="Bold">
+                    Select Project
+                </Label>
+                <ComboBox
+                    Width="200"
+                    Height="32"
+                    Margin="0,5,0,5"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding ProjectNames}"
+                    SelectedValue="{Binding SelectedProjectName}" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2" Margin="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Border
+                Grid.Column="0"
+                Width="auto"
+                Margin="5,0,5,15"
+                Background="white"
+                CornerRadius="5">
+                <Border.Effect>
+                    <DropShadowEffect
+                        BlurRadius="15"
+                        Direction="320"
+                        Opacity="0.5"
+                        ShadowDepth="1"
+                        Color="Black" />
+                </Border.Effect>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Label
+                        Grid.Row="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Content="New"
+                        FontSize="16" />
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding WorkItems}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel IsItemsHost="True" Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border
+                                        MinHeight="50"
+                                        Margin="10"
+                                        Padding="5"
+                                        Background="#f7f6f4"
+                                        BorderBrush="Black"
+                                        BorderThickness="1">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
+                                            </Grid.RowDefinitions>
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                FontSize="14"
+                                                FontWeight="DemiBold"
+                                                Text="{Binding Title}"
+                                                TextWrapping="WrapWithOverflow" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                FontSize="12"
+                                                Text="{Binding Description}"
+                                                TextWrapping="WrapWithOverflow" />
+                                            <TextBlock
+                                                Grid.Row="2"
+                                                FontSize="12"
+                                                Text="Owner: Name Here"
+                                                TextWrapping="WrapWithOverflow" />
+                                            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                                                <Image
+                                                    Width="12"
+                                                    Height="12"
+                                                    Source="{Binding WorkItemIconPath}" />
+                                                <Label Content="{Binding CreatedAt}" FontSize="11" />
+                                                <Label Content="{Binding StoryPoints}" FontSize="11" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+            <Border
+                Grid.Column="1"
+                Width="auto"
+                Margin="5,0,5,15"
+                Background="white"
+                CornerRadius="5">
+                <Border.Effect>
+                    <DropShadowEffect
+                        BlurRadius="15"
+                        Direction="320"
+                        Opacity="0.5"
+                        ShadowDepth="1"
+                        Color="Black" />
+                </Border.Effect>
+                <Label
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Content="Development"
+                    FontSize="16" />
+            </Border>
+            <Border
+                Grid.Column="2"
+                Width="auto"
+                Margin="5,0,5,15"
+                Background="white"
+                CornerRadius="5">
+                <Border.Effect>
+                    <DropShadowEffect
+                        BlurRadius="15"
+                        Direction="320"
+                        Opacity="0.5"
+                        ShadowDepth="1"
+                        Color="Black" />
+                </Border.Effect>
+                <Label
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Content="Review"
+                    FontSize="16" />
+            </Border>
+            <Border
+                Grid.Column="3"
+                Width="auto"
+                Margin="5,0,5,15"
+                Background="white"
+                CornerRadius="5">
+                <Border.Effect>
+                    <DropShadowEffect
+                        BlurRadius="15"
+                        Direction="320"
+                        Opacity="0.5"
+                        ShadowDepth="1"
+                        Color="Black" />
+                </Border.Effect>
+                <Label
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Content="Testing"
+                    FontSize="16" />
+            </Border>
+            <Border
+                Grid.Column="4"
+                Width="auto"
+                Margin="5,0,5,15"
+                Background="white"
+                CornerRadius="5">
+                <Border.Effect>
+                    <DropShadowEffect
+                        BlurRadius="15"
+                        Direction="320"
+                        Opacity="0.5"
+                        ShadowDepth="1"
+                        Color="Black" />
+                </Border.Effect>
+                <Label
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Content="Resolved"
+                    FontSize="16" />
+            </Border>
+        </Grid>
+
     </Grid>
 </UserControl>

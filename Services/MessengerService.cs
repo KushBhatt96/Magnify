@@ -8,6 +8,9 @@ namespace Magnify.Services
 {
     public class MessengerService : IMessengerService
     {
+        private static IMessengerService? _instance;
+        private static readonly object _lock = new object();
+
         private readonly ConcurrentDictionary<Type, List<Subscription>> _subscriptions;
 
         private readonly ConcurrentDictionary<Type, object> _currentState;
@@ -18,18 +21,23 @@ namespace Magnify.Services
             _currentState = new ConcurrentDictionary<Type, object>();
         }
 
-        private static MessengerService instance = null;
-        public static MessengerService Instance
+        public static IMessengerService Instance
         {
             get
             {
-                if(instance == null)
+                if(_instance == null)
                 {
-                    instance = new MessengerService();
+                    lock (_lock)
+                    {
+                        _instance = new MessengerService();
+                    }
                 }
-                return instance;
+                return _instance;
             }
         }
+
+        #region Public Instance Methods
+
         public void Send<TMessage>(TMessage message)
         {
             if (message == null) throw new ArgumentNullException(nameof(message));
@@ -90,10 +98,13 @@ namespace Magnify.Services
                 var subscriptionToRemove = subscriptionsForMessageType.FirstOrDefault(subscription => subscription.Subscriber == subscriber);
 
                 if (subscriptionToRemove != null)
+                {
                     _subscriptions[typeof(TMessage)].Remove(subscriptionToRemove);
+                }
             }
-
         }
+
+        #endregion
     }
 
     public class Subscription

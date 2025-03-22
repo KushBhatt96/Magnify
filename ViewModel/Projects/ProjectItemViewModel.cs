@@ -1,7 +1,7 @@
 ﻿using Magnify.Command;
+using Magnify.Data;
 using Magnify.Interfaces.Services;
 using Magnify.Model;
-using Magnify.Model.Stores;
 using Magnify.Services;
 using System;
 
@@ -19,13 +19,14 @@ namespace Magnify.ViewModel
         {
             _project = project;
             _messenger = MessengerService.Instance;
-            _navigationService = NavigationService.Instance;
+            _navigationService = NavigationService.GetInstance();
             SaveCommand = new DelegateCommand(Save, CanSave);
         }
 
         public void Save(object? obj)
         {
             CreatedAt = DateTime.Now.ToShortDateString();
+            ProjectDataProvider.Instance.Projects.Add(_project);
             _messenger.Send<ProjectItemViewModel>(this);
             _navigationService.NavigateBack();
         }
@@ -37,7 +38,7 @@ namespace Magnify.ViewModel
 
         public Guid Id => _project.Id;
 
-        public string? Title
+        public string Title
         {
             get => _project.Title;
             set
@@ -48,7 +49,7 @@ namespace Magnify.ViewModel
             }
         }
 
-        public string? Description
+        public string Description
         {
             get => _project.Description;
             set
